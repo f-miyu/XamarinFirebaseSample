@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
+    <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Prism.NavigationEx" Version="1.2.0" />
+    <PackageReference Include="Plugin.FirebaseAuth" Version="1.1.2" />
+    <PackageReference Include="Plugin.CloudFirestore" Version="1.2.1" />
+    <PackageReference Include="Plugin.FirebaseStorage" Version="1.1.0" />
+    <PackageReference Include="ReactiveProperty" Version="5.3.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+</Project>
