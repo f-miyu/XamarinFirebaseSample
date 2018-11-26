@@ -4,9 +4,10 @@ using System.Linq;
 using AiForms.Renderers;
 using AiForms.Renderers.iOS;
 using Xamarin.Forms;
+using XamarinFirebaseSample.Controls;
 using XamarinFirebaseSample.iOS.Renderers;
 
-[assembly: ExportRenderer(typeof(GridCollectionView), typeof(CustomGridCollectionViewRenderer))]
+[assembly: ExportRenderer(typeof(CustomGridCollectionView), typeof(CustomGridCollectionViewRenderer))]
 namespace XamarinFirebaseSample.iOS.Renderers
 {
     public class CustomGridCollectionViewRenderer : GridCollectionViewRenderer

@@ -1,67 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:XamarinFirebaseSample.Controls"
              xmlns:collectionview="clr-namespace:AiForms.Renderers;assembly=CollectionView"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:pb="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              x:Class="XamarinFirebaseSample.Views.MainPage" 
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             BackgroundColor="Gainsboro">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="追加" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
-<!--    <collectionview:GridCollectionView ItemsSource="{Binding Items}"
+    <controls:CustomGridCollectionView ItemsSource="{Binding Items}"
                                        GridType="UniformGrid"
-                                       ColumnSpacing="4"
-                                       RowSpacing="4"
+                                       ColumnSpacing="8"
+                                       RowSpacing="8"
+                                       BothSidesMargin="8"
                                        PortraitColumns="2"
                                        LandscapeColumns="3"
                                        ColumnHeight="1.4"
-                                       TouchFeedbackColor="Gray"
-                                       Margin="4,0">
+                                       TouchFeedbackColor="Gray">
         <collectionview:GridCollectionView.Behaviors>
             <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
         </collectionview:GridCollectionView.Behaviors>
         <collectionview:GridCollectionView.ItemTemplate>
             <DataTemplate>
                 <collectionview:ContentCell>
-                    <Grid>
+                    <Grid BackgroundColor="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="50" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <ffimageloading:CachedImage Grid.Row="0" 
                                                     Source="{Binding Image.Value}"
-                                                    Aspect="AspectFit"
-                                                    DownsampleWidth="300" />
-                        <Label Text="{Binding Title.Value}" 
+                                                    Aspect="AspectFill"
+                                                    DownsampleUseDipUnits="true"
+                                                    DownsampleWidth="200"/>
+                        <Grid Grid.Row="1" 
+                              BackgroundColor="White" 
+                              Padding="4">
+                            <Label 
+                               VerticalOptions="CenterAndExpand"
+                               Text="{Binding Title.Value}" 
                                FontSize="Small"
                                MaxLines="1" 
-                               LineBreakMode="TailTruncation" />                            
+                               LineBreakMode="TailTruncation" />  
+                        </Grid>                   
                     </Grid>
                 </collectionview:ContentCell>
             </DataTemplate>
         </collectionview:GridCollectionView.ItemTemplate>
-    </collectionview:GridCollectionView>-->
-    <ListView ItemsSource="{Binding Items}">
-        <ListView.Behaviors>
-            <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
-        </ListView.Behaviors>
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout Orientation="Horizontal">
-                        <ffimageloading:CachedImage WidthRequest="100"
-                                                    HeightRequest="100"
-                                                    Source="{Binding Image.Value}"
-                                                    Aspect="AspectFit"
-                                                    DownsampleWidth="300" />
-                        <Label Text="{Binding Title.Value}" 
-                               FontSize="Small"
-                               MaxLines="1" 
-                               LineBreakMode="TailTruncation" />   
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    </controls:CustomGridCollectionView>
 </ContentPage>

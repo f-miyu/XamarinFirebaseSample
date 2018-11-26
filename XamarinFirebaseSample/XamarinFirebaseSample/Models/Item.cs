@@ -22,9 +22,9 @@ namespace XamarinFirebaseSample.Models
         public void CopyTo(Item item)
         {
             item.Id = Id;
-            item.Title = item.Title;
-            item.Image = item.Image;
-            item.Timestamp = item.Timestamp;
+            item.Title = Title;
+            item.Image = Image;
+            item.Timestamp = Timestamp;
         }
     }
 }

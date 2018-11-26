@@ -23,9 +23,9 @@ namespace XamarinFirebaseSample.Droid
             Plugin.FirebaseAuth.FirebaseAuth.Init(this);
             Plugin.FirebaseStorage.FirebaseStorage.Init(this);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
 
+            global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
         }
 
