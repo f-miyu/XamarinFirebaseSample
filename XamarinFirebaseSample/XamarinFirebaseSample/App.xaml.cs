@@ -8,6 +8,8 @@ using Prism.NavigationEx;
 using System.Linq;
 using System;
 using Xamarin.Forms.Internals;
+using XamarinFirebaseSample.Helpers;
+using System.Reflection;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XamarinFirebaseSample
@@ -35,7 +37,7 @@ namespace XamarinFirebaseSample
             containerRegistry.RegisterForNavigation(this);
 
             GetType().Assembly.GetTypes()
-                     .Where(t => t.Namespace.EndsWith(".Services", StringComparison.Ordinal) && !t.IsAbstract && !t.IsInterface)
+                     .Where(t => t.Namespace?.EndsWith(".Services", StringComparison.Ordinal) ?? false && !t.IsAbstract && !t.IsInterface)
                      .Select(t => (Interface: t.GetInterface("I" + t.Name), Type: t))
                      .Where(t => t.Interface != null)
                      .ForEach(t =>

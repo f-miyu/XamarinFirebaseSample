@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 
@@ -16,14 +17,21 @@ namespace XamarinFirebaseSample.Droid
 
             base.OnCreate(bundle);
 
+            CrossCurrentActivity.Current.Init(this, bundle);
+
             Plugin.CloudFirestore.CloudFirestore.Init(this);
             Plugin.FirebaseAuth.FirebaseAuth.Init(this);
             Plugin.FirebaseStorage.FirebaseStorage.Init(this);
 
+            global::Xamarin.Forms.Forms.Init(this, bundle);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

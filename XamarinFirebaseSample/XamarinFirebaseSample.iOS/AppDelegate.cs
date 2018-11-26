@@ -2,6 +2,7 @@
 using Prism;
 using Prism.Ioc;
 using UIKit;
+using XamarinFirebaseSample.iOS.Renderers;
 
 
 namespace XamarinFirebaseSample.iOS
@@ -23,9 +24,10 @@ namespace XamarinFirebaseSample.iOS
         {
             Firebase.Core.App.Configure();
 
+            global::Xamarin.Forms.Forms.Init();
+            AiForms.Renderers.iOS.CollectionViewInit.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
 
-            global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);

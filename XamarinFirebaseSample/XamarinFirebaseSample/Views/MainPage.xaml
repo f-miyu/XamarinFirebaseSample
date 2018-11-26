@@ -1,6 +1,67 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="XamarinFirebaseSample.Views.MainPage" Title="{Binding Title}">
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:collectionview="clr-namespace:AiForms.Renderers;assembly=CollectionView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:pb="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             x:Class="XamarinFirebaseSample.Views.MainPage" 
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="追加" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+<!--    <collectionview:GridCollectionView ItemsSource="{Binding Items}"
+                                       GridType="UniformGrid"
+                                       ColumnSpacing="4"
+                                       RowSpacing="4"
+                                       PortraitColumns="2"
+                                       LandscapeColumns="3"
+                                       ColumnHeight="1.4"
+                                       TouchFeedbackColor="Gray"
+                                       Margin="4,0">
+        <collectionview:GridCollectionView.Behaviors>
+            <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
+        </collectionview:GridCollectionView.Behaviors>
+        <collectionview:GridCollectionView.ItemTemplate>
+            <DataTemplate>
+                <collectionview:ContentCell>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="50" />
+                        </Grid.RowDefinitions>
+                        <ffimageloading:CachedImage Grid.Row="0" 
+                                                    Source="{Binding Image.Value}"
+                                                    Aspect="AspectFit"
+                                                    DownsampleWidth="300" />
+                        <Label Text="{Binding Title.Value}" 
+                               FontSize="Small"
+                               MaxLines="1" 
+                               LineBreakMode="TailTruncation" />                            
+                    </Grid>
+                </collectionview:ContentCell>
+            </DataTemplate>
+        </collectionview:GridCollectionView.ItemTemplate>
+    </collectionview:GridCollectionView>-->
+    <ListView ItemsSource="{Binding Items}">
+        <ListView.Behaviors>
+            <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
+        </ListView.Behaviors>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal">
+                        <ffimageloading:CachedImage WidthRequest="100"
+                                                    HeightRequest="100"
+                                                    Source="{Binding Image.Value}"
+                                                    Aspect="AspectFit"
+                                                    DownsampleWidth="300" />
+                        <Label Text="{Binding Title.Value}" 
+                               FontSize="Small"
+                               MaxLines="1" 
+                               LineBreakMode="TailTruncation" />   
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
