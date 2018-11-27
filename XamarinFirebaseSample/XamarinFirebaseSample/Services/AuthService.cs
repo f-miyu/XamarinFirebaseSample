@@ -67,8 +67,7 @@ namespace XamarinFirebaseSample.Services
 
         public void OnPageLoading(Uri uri)
         {
-            _authenticator.OnPageLoading(uri);
-            _authenticator = null;
+            _authenticator?.OnPageLoading(uri);
         }
     }
 }

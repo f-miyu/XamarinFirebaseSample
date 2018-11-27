@@ -29,8 +29,6 @@ namespace XamarinFirebaseSample
         {
             InitializeComponent();
 
-            //await NavigationService.NavigateAsync<MainPageViewModel>(wrapInNavigationPage: true);
-
             await NavigationService.NavigateAsync<SplashScreenPageViewModel>();
         }
 

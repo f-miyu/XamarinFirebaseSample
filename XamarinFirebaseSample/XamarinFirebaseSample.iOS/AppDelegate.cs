@@ -42,7 +42,7 @@ namespace XamarinFirebaseSample.iOS
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
             var authService = _app.Container.Resolve<IAuthService>();
-            authService.OnLoading(new Uri(url.AbsoluteString));
+            authService.OnPageLoading(new Uri(url.AbsoluteString));
 
             return true;
         }

@@ -29,7 +29,7 @@ namespace XamarinFirebaseSample.Droid
             base.OnCreate(savedInstanceState);
 
             var authService = MainActivity.Instance.App.Container.Resolve<IAuthService>();
-            authService.OnLoading(new Uri(Intent.Data.ToString()));
+            authService.OnPageLoading(new Uri(Intent.Data.ToString()));
 
             var intent = new Intent(this, typeof(MainActivity));
             intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);
