@@ -16,6 +16,7 @@
     <PackageReference Include="AiForms.CollectionView" Version="0.3.8-pre" />
     <PackageReference Include="Plugin.CloudFirestore" Version="1.2.2" />
     <PackageReference Include="Plugin.FirebaseStorage" Version="1.1.0" />
+    <PackageReference Include="Xamarin.Auth" Version="1.6.0.4" />
   </ItemGroup>
 
   <ItemGroup>

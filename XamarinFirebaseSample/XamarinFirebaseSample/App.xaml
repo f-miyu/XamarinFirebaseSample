@@ -1,6 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms" x:Class="XamarinFirebaseSample.App">
     <Application.Resources>
-        <!-- Application resource dictionary -->
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarTextColor" Value="White" />
+            <Setter Property="BarBackgroundColor" Value="#2196F3" />
+        </Style>
     </Application.Resources>
 </prism:PrismApplication>

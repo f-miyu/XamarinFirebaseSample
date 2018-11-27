@@ -1,8 +1,10 @@
-﻿using Foundation;
+﻿using System;
+using Foundation;
 using Prism;
 using Prism.Ioc;
 using UIKit;
 using XamarinFirebaseSample.iOS.Renderers;
+using XamarinFirebaseSample.Services;
 
 
 namespace XamarinFirebaseSample.iOS
@@ -13,6 +15,8 @@ namespace XamarinFirebaseSample.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
+        private App _app;
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -28,9 +32,19 @@ namespace XamarinFirebaseSample.iOS
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
 
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App(new iOSInitializer()));
+
+            _app = new App(new iOSInitializer());
+            LoadApplication(_app);
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            var authService = _app.Container.Resolve<IAuthService>();
+            authService.OnLoading(new Uri(url.AbsoluteString));
+
+            return true;
         }
     }
 

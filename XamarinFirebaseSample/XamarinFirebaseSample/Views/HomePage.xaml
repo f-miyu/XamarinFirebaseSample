@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XamarinFirebaseSample.Controls"
+             xmlns:collectionview="clr-namespace:AiForms.Renderers;assembly=CollectionView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:pb="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             Title="{Binding Title}"
+             x:Class="XamarinFirebaseSample.Views.HomePage"
+             BackgroundColor="Gainsboro">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="追加" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+    <controls:CustomGridCollectionView ItemsSource="{Binding Items}"
+                                       GridType="UniformGrid"
+                                       ColumnSpacing="8"
+                                       RowSpacing="8"
+                                       BothSidesMargin="8"
+                                       PortraitColumns="2"
+                                       LandscapeColumns="3"
+                                       ColumnHeight="1.4"
+                                       TouchFeedbackColor="Gray">
+        <collectionview:GridCollectionView.Behaviors>
+            <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
+        </collectionview:GridCollectionView.Behaviors>
+        <collectionview:GridCollectionView.ItemTemplate>
+            <DataTemplate>
+                <collectionview:ContentCell>
+                    <Grid BackgroundColor="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ffimageloading:CachedImage Grid.Row="0" 
+                                                    Source="{Binding Image.Value}"
+                                                    Aspect="AspectFill"
+                                                    DownsampleUseDipUnits="true"
+                                                    DownsampleWidth="200"/>
+                        <Grid Grid.Row="1" 
+                              BackgroundColor="White" 
+                              Padding="4">
+                            <Label 
+                               VerticalOptions="CenterAndExpand"
+                               Text="{Binding Title.Value}" 
+                               FontSize="Small"
+                               MaxLines="1" 
+                               LineBreakMode="TailTruncation" />  
+                        </Grid>                   
+                    </Grid>
+                </collectionview:ContentCell>
+            </DataTemplate>
+        </collectionview:GridCollectionView.ItemTemplate>
+    </controls:CustomGridCollectionView>
+</ContentPage>

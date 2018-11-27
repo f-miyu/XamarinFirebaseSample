@@ -1,21 +1,33 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 
 namespace XamarinFirebaseSample.Droid
 {
-    [Activity(Label = "XamarinFirebaseSample", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "XamarinFirebaseSample", Icon = "@mipmap/ic_launcher",
+              Theme = "@style/SplashTheme", MainLauncher = true,
+              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public static MainActivity Instance { get; private set; }
+
+        public App App { get; private set; }
+
         protected override void OnCreate(Bundle bundle)
         {
+            base.Window.RequestFeature(WindowFeatures.ActionBar);
+            base.SetTheme(Resource.Style.MainTheme);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            Instance = this;
 
             CrossCurrentActivity.Current.Init(this, bundle);
 
@@ -26,7 +38,9 @@ namespace XamarinFirebaseSample.Droid
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(new AndroidInitializer()));
+
+            App = new App(new AndroidInitializer());
+            LoadApplication(App);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
