@@ -52,5 +52,16 @@
 	<string>XamarinFirebaseSample</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>投稿する画像を選択するためにフォトライブラリにアクセスします</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.258470923993-7sn34kof06dn1aft7pp9vqubhegqtbv4</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>Google OAuth</string>
+		</dict>
+	</array>
 </dict>
 </plist>

@@ -13,10 +13,11 @@ using Android.Widget;
 using XamarinFirebaseSample.Helpers;
 using XamarinFirebaseSample.Services;
 using Prism.Ioc;
+using Android.Content.PM;
 
 namespace XamarinFirebaseSample.Droid
 {
-    [Activity(Label = "CustomUrlSchemeInterceptorActivity")]
+    [Activity(Label = "CustomUrlSchemeInterceptorActivity", NoHistory = true, LaunchMode = LaunchMode.SingleTop)]
     [IntentFilter(
         new[] { Intent.ActionView },
         Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
@@ -28,8 +29,8 @@ namespace XamarinFirebaseSample.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            var authService = MainActivity.Instance.App.Container.Resolve<IAuthService>();
-            authService.OnPageLoading(new Uri(Intent.Data.ToString()));
+            MainActivity.Instance.App.Container.Resolve<IAuthService>()
+                        .OnPageLoading(new Uri(Intent.Data.ToString()));
 
             var intent = new Intent(this, typeof(MainActivity));
             intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.NewTask);

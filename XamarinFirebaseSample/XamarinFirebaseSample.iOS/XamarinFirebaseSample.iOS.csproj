@@ -220,6 +220,9 @@
     <PackageReference Include="Xamarin.Auth">
       <Version>1.6.0.4</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.FirebaseCrashlytics">
+      <Version>1.0.0-pre</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XamarinFirebaseSample\XamarinFirebaseSample.csproj">

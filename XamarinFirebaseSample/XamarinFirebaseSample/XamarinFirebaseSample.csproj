@@ -17,6 +17,7 @@
     <PackageReference Include="Plugin.CloudFirestore" Version="1.2.2" />
     <PackageReference Include="Plugin.FirebaseStorage" Version="1.1.0" />
     <PackageReference Include="Xamarin.Auth" Version="1.6.0.4" />
+    <PackageReference Include="Plugin.FirebaseCrashlytics" Version="1.0.0-pre" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,5 +25,6 @@
     <Folder Include="Services\" />
     <Folder Include="Models\" />
     <Folder Include="Controls\" />
+    <Folder Include="Events\" />
   </ItemGroup>
 </Project>

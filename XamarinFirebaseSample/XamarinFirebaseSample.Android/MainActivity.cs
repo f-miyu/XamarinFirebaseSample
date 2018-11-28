@@ -1,15 +1,19 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using Plugin.CurrentActivity;
 using Prism;
+using Prism.Events;
 using Prism.Ioc;
+using Xamarin.Auth;
 
 namespace XamarinFirebaseSample.Droid
 {
-    [Activity(Label = "XamarinFirebaseSample", Icon = "@mipmap/ic_launcher",
-              Theme = "@style/SplashTheme", MainLauncher = true,
+    [Activity(Label = "@string/app_name",
+              Icon = "@mipmap/ic_launcher",
+              Theme = "@style/MainTheme",
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -19,9 +23,6 @@ namespace XamarinFirebaseSample.Droid
 
         protected override void OnCreate(Bundle bundle)
         {
-            base.Window.RequestFeature(WindowFeatures.ActionBar);
-            base.SetTheme(Resource.Style.MainTheme);
-
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -34,8 +35,14 @@ namespace XamarinFirebaseSample.Droid
             Plugin.CloudFirestore.CloudFirestore.Init(this);
             Plugin.FirebaseAuth.FirebaseAuth.Init(this);
             Plugin.FirebaseStorage.FirebaseStorage.Init(this);
+            Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
+
+            Crashlytics.Crashlytics.HandleManagedExceptions();
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
+
+            CustomTabsConfiguration.CustomTabsClosingMessage = null;
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -46,6 +53,15 @@ namespace XamarinFirebaseSample.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            App.Container.Resolve<IEventAggregator>()
+               .GetEvent<PubSubEvent>()
+               .Publish();
         }
     }
 

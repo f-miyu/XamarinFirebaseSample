@@ -8,21 +8,27 @@ using Prism.Logging;
 using Prism.Services;
 using XamarinFirebaseSample.Services;
 using Reactive.Bindings;
+using Prism.Events;
+using System.Collections.ObjectModel;
 
 namespace XamarinFirebaseSample.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
         private readonly IItemListService _itemListService;
+        private readonly IEventAggregator _eventAggregator;
 
-        public ReadOnlyReactiveCollection<ItemViewModel> Items { get; }
+        private readonly SubscriptionToken _token;
+
+        public ReadOnlyReactiveCollection<ItemViewModel> Items { get; set; }
 
         public AsyncReactiveCommand<ItemViewModel> LoadMoreCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
         public AsyncReactiveCommand AddItemCommand { get; } = new AsyncReactiveCommand();
 
-        public HomePageViewModel(INavigationService navigationService, IItemListService itemListService) : base(navigationService)
+        public HomePageViewModel(INavigationService navigationService, IItemListService itemListService, IEventAggregator eventAggregator) : base(navigationService)
         {
             _itemListService = itemListService;
+            _eventAggregator = eventAggregator;
 
             Title = "ホーム";
 
@@ -30,7 +36,7 @@ namespace XamarinFirebaseSample.ViewModels
 
             LoadMoreCommand.Subscribe(async item =>
             {
-                if (item == Items.LastOrDefault())
+                if (item == Items?.LastOrDefault())
                 {
                     await _itemListService.LoadAsync();
                 }
@@ -40,6 +46,13 @@ namespace XamarinFirebaseSample.ViewModels
             {
                 await _itemListService.AddItemAsync("test", "");
             });
+
+            _token = _eventAggregator.GetEvent<PubSubEvent>()
+                            .Subscribe(() =>
+                            {
+                                System.Diagnostics.Debug.WriteLine("closed");
+                                //_itemListService.Close();
+                            });
         }
 
         public override void OnNavigatingTo(INavigationParameters parameters)

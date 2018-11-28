@@ -5,6 +5,8 @@ using Prism.Ioc;
 using UIKit;
 using XamarinFirebaseSample.iOS.Renderers;
 using XamarinFirebaseSample.Services;
+using Firebase.Crashlytics;
+using Prism.Events;
 
 
 namespace XamarinFirebaseSample.iOS
@@ -27,9 +29,11 @@ namespace XamarinFirebaseSample.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Firebase.Core.App.Configure();
+            Crashlytics.Configure();
 
             AiForms.Renderers.iOS.CollectionViewInit.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
             global::Xamarin.Forms.Forms.Init();
 
@@ -41,8 +45,8 @@ namespace XamarinFirebaseSample.iOS
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            var authService = _app.Container.Resolve<IAuthService>();
-            authService.OnPageLoading(new Uri(url.AbsoluteString));
+            _app.Container.Resolve<IAuthService>()
+                .OnPageLoading(new Uri(url.AbsoluteString));
 
             return true;
         }

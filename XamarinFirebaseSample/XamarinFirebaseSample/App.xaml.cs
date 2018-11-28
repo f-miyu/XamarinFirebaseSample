@@ -10,6 +10,7 @@ using System;
 using Xamarin.Forms.Internals;
 using XamarinFirebaseSample.Helpers;
 using System.Reflection;
+using Prism.Events;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XamarinFirebaseSample
@@ -51,6 +52,13 @@ namespace XamarinFirebaseSample
                              containerRegistry.Register(t.Interface, t.Type);
                          }
                      });
+        }
+
+        public void Close()
+        {
+            var eventAggregator = Container.Resolve<IEventAggregator>();
+
+            eventAggregator.GetEvent<PubSubEvent>().Publish();
         }
     }
 }

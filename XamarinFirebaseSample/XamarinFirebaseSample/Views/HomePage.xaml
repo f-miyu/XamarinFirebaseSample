@@ -45,7 +45,7 @@
                                FontSize="Small"
                                MaxLines="1" 
                                LineBreakMode="TailTruncation" />  
-                        </Grid>                   
+                        </Grid>
                     </Grid>
                 </collectionview:ContentCell>
             </DataTemplate>

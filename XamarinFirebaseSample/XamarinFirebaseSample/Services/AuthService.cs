@@ -28,6 +28,7 @@ namespace XamarinFirebaseSample.Services
                     redirectUri = AppConstans.AndroidReversedGoogleClientId;
                     break;
             }
+            redirectUri += ":/oauth2redirect";
 
             _authenticator = new OAuth2Authenticator(clientId,
                                                      null,

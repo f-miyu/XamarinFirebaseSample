@@ -6587,6 +6587,9 @@ namespace XamarinFirebaseSample.Droid
 			// aapt resource value: 0x7f09003e
 			public const int abc_toolbar_collapse_description = 2131296318;
 			
+			// aapt resource value: 0x7f090058
+			public const int app_name = 2131296344;
+			
 			// aapt resource value: 0x7f09004c
 			public const int appbar_scrolling_view_behavior = 2131296332;
 			
@@ -6595,6 +6598,9 @@ namespace XamarinFirebaseSample.Droid
 			
 			// aapt resource value: 0x7f09004e
 			public const int character_counter_pattern = 2131296334;
+			
+			// aapt resource value: 0x7f090059
+			public const int com_crashlytics_android_build_id = 2131296345;
 			
 			// aapt resource value: 0x7f090008
 			public const int common_google_play_services_enable_button = 2131296264;

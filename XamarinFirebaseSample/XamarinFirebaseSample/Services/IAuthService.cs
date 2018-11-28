@@ -6,7 +6,7 @@ namespace XamarinFirebaseSample.Services
 {
     public interface IAuthService
     {
-        void OnPageLoading(Uri uri);
         Task<(string IdToken, string AccessToken)> LoginWithGoogle();
+        void OnPageLoading(Uri uri);
     }
 }
