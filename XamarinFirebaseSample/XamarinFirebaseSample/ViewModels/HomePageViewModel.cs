@@ -46,13 +46,6 @@ namespace XamarinFirebaseSample.ViewModels
             {
                 await _itemListService.AddItemAsync("test", "");
             });
-
-            _token = _eventAggregator.GetEvent<PubSubEvent>()
-                            .Subscribe(() =>
-                            {
-                                System.Diagnostics.Debug.WriteLine("closed");
-                                //_itemListService.Close();
-                            });
         }
 
         public override void OnNavigatingTo(INavigationParameters parameters)

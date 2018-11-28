@@ -15,6 +15,7 @@ namespace XamarinFirebaseSample.Services
         private readonly IAuthService _authService;
         private readonly IAuth _firebaseAuth;
         private readonly IFirestore _firestore;
+        private readonly Plugin.FirebaseAuth.IListenerRegistration _registration;
 
         private readonly ReactivePropertySlim<bool> _isInitialized = new ReactivePropertySlim<bool>();
         public ReadOnlyReactivePropertySlim<bool> IsInitialized { get; }
@@ -34,7 +35,7 @@ namespace XamarinFirebaseSample.Services
             IsInitialized = _isInitialized.ToReadOnlyReactivePropertySlim();
             IsLoggedIn = _isLoggedIn.ToReadOnlyReactivePropertySlim();
 
-            _firebaseAuth.AddAuthStateChangedListener(user =>
+            _registration = _firebaseAuth.AddAuthStateChangedListener(user =>
             {
                 _isLoggedIn.Value = user != null;
 

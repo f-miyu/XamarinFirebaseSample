@@ -8,6 +8,7 @@ using Prism;
 using Prism.Events;
 using Prism.Ioc;
 using Xamarin.Auth;
+using XamarinFirebaseSample.Events;
 
 namespace XamarinFirebaseSample.Droid
 {
@@ -59,9 +60,7 @@ namespace XamarinFirebaseSample.Droid
         {
             base.OnDestroy();
 
-            App.Container.Resolve<IEventAggregator>()
-               .GetEvent<PubSubEvent>()
-               .Publish();
+            App.Destroy();
         }
     }
 

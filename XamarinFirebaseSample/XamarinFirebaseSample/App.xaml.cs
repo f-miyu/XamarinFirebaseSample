@@ -54,11 +54,11 @@ namespace XamarinFirebaseSample
                      });
         }
 
-        public void Close()
+        public void Destroy()
         {
-            var eventAggregator = Container.Resolve<IEventAggregator>();
-
-            eventAggregator.GetEvent<PubSubEvent>().Publish();
+            Container.Resolve<IEventAggregator>()
+               .GetEvent<CloseEvent>()
+               .Publish();
         }
     }
 }
