@@ -2,19 +2,68 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:converters="clr-namespace:XamarinFirebaseSample.Converters" 
              Title="{Binding Title}"
              x:Class="XamarinFirebaseSample.Views.ItemDetailPage">
     <ScrollView>
-        <StackLayout Padding="8,0">
-            <ffimageloading:CachedImage HeightRequest="300"
+        <StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="32,8,32,0">
+                <ffimageloading:CachedImage HeightRequest="40"
+                                            WidthRequest="40"
+                                            Source="{Binding OwnerImage.Value}"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize = "true">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
+                <Label Text="{Binding OwnerName.Value}" FontSize="Small" VerticalOptions="Center" />
+            </StackLayout>
+            <ffimageloading:CachedImage HeightRequest="350"
                                     Source="{Binding ItemImage.Value}"
                                     Aspect="AspectFit"
-                                    DownsampleUseDipUnits="true"
-                                    DownsampleHeight="300" />
-            <Label Text="{Binding LikeCount.Value, StringFormat='{0}人がいいね!'}" />
-            <Button Text="いいね!" Command="{Binding LikeOrUnlikeCommand}" 
-                    HorizontalOptions="Center" />
-            <Label Text="{Binding ItemTitle.Value}" FontSize="Large" />
+                                    DownsampleToViewSize = "true" />
+            <Label Text="{Binding LikeCount.Value, StringFormat='{0}人がいいね'}" 
+                   FontSize="Small" 
+                   Margin="32,0"/>
+            <Button Command="{Binding LikeOrUnlikeCommand}" 
+                    HorizontalOptions="Center"
+                    WidthRequest="240"
+                    BorderColor="LightPink"
+                    BorderWidth="2">
+                <Button.Text>
+                    <Binding Path="IsLiked.Value">
+                        <Binding.Converter>
+                            <converters:BoolToObjectConverter x:TypeArguments="x:String"
+                                                              FalseObject="いいね"
+                                                              TrueObject="いいねしています">
+                            </converters:BoolToObjectConverter>
+                        </Binding.Converter>
+                    </Binding>
+                </Button.Text>
+                <Button.BackgroundColor>
+                    <Binding Path="IsLiked.Value">
+                        <Binding.Converter>
+                            <converters:BoolToObjectConverter x:TypeArguments="Color"
+                                                              FalseObject="LightPink"
+                                                              TrueObject="White">
+                            </converters:BoolToObjectConverter>
+                        </Binding.Converter>
+                    </Binding>
+                </Button.BackgroundColor>
+                <Button.TextColor>
+                    <Binding Path="IsLiked.Value">
+                        <Binding.Converter>
+                            <converters:BoolToObjectConverter x:TypeArguments="Color"
+                                                              FalseObject="White"
+                                                              TrueObject="LightPink">
+                            </converters:BoolToObjectConverter>
+                        </Binding.Converter>
+                    </Binding>
+                </Button.TextColor>
+            </Button>
+            <Label Text="{Binding ItemTitle.Value}" FontSize="32" Margin="32,0"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
