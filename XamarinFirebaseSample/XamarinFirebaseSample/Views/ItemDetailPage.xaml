@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="{Binding Title}"
+             x:Class="XamarinFirebaseSample.Views.ItemDetailPage">
+    <ScrollView>
+        <StackLayout Padding="8,0">
+            <ffimageloading:CachedImage HeightRequest="300"
+                                    Source="{Binding ItemImage.Value}"
+                                    Aspect="AspectFit"
+                                    DownsampleUseDipUnits="true"
+                                    DownsampleHeight="300" />
+            <Label Text="{Binding LikeCount.Value, StringFormat='{0}人がいいね!'}" />
+            <Button Text="いいね!" Command="{Binding LikeOrUnlikeCommand}" 
+                    HorizontalOptions="Center" />
+            <Label Text="{Binding ItemTitle.Value}" FontSize="Large" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

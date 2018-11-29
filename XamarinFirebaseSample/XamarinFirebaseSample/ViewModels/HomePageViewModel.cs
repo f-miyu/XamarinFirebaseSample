@@ -9,7 +9,9 @@ using Prism.Services;
 using XamarinFirebaseSample.Services;
 using Reactive.Bindings;
 using Prism.Events;
-using System.Collections.ObjectModel;
+using XamarinFirebaseSample.Events;
+using System.Reactive.Linq;
+using Reactive.Bindings.Extensions;
 
 namespace XamarinFirebaseSample.ViewModels
 {
@@ -18,12 +20,11 @@ namespace XamarinFirebaseSample.ViewModels
         private readonly IItemListService _itemListService;
         private readonly IEventAggregator _eventAggregator;
 
-        private readonly SubscriptionToken _token;
-
         public ReadOnlyReactiveCollection<ItemViewModel> Items { get; set; }
 
         public AsyncReactiveCommand<ItemViewModel> LoadMoreCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
         public AsyncReactiveCommand AddItemCommand { get; } = new AsyncReactiveCommand();
+        public AsyncReactiveCommand<ItemViewModel> GoToItemDetailCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
 
         public HomePageViewModel(INavigationService navigationService, IItemListService itemListService, IEventAggregator eventAggregator) : base(navigationService)
         {
@@ -46,6 +47,13 @@ namespace XamarinFirebaseSample.ViewModels
             {
                 await _itemListService.AddItemAsync("test", "");
             });
+
+            GoToItemDetailCommand.Subscribe(async viewModel =>
+            {
+                await NavigateAsync<ItemDetailPageViewModel, string>(viewModel.Id.Value);
+            });
+
+            _eventAggregator.GetEvent<DestoryEvent>().Subscribe(_itemListService.Close);
         }
 
         public override void OnNavigatingTo(INavigationParameters parameters)

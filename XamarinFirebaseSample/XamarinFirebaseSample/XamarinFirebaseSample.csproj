@@ -1,9 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
@@ -18,8 +16,9 @@
     <PackageReference Include="Plugin.FirebaseStorage" Version="1.1.0" />
     <PackageReference Include="Xamarin.Auth" Version="1.6.0.4" />
     <PackageReference Include="Plugin.FirebaseCrashlytics" Version="1.0.0-pre" />
+    <PackageReference Include="Plugin.FirebaseAnalytics" Version="1.0.0" />
+    <PackageReference Include="Nito.AsyncEx" Version="4.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Services\" />

@@ -223,6 +223,9 @@
     <PackageReference Include="Plugin.FirebaseCrashlytics">
       <Version>1.0.0-pre</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.FirebaseAnalytics">
+      <Version>1.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\XamarinFirebaseSample\XamarinFirebaseSample.csproj">

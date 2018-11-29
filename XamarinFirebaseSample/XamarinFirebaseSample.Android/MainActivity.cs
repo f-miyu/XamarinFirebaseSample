@@ -36,6 +36,7 @@ namespace XamarinFirebaseSample.Droid
             Plugin.CloudFirestore.CloudFirestore.Init(this);
             Plugin.FirebaseAuth.FirebaseAuth.Init(this);
             Plugin.FirebaseStorage.FirebaseStorage.Init(this);
+            Plugin.FirebaseAnalytics.FirebaseAnalytics.Init(this);
             Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
 
             Crashlytics.Crashlytics.HandleManagedExceptions();

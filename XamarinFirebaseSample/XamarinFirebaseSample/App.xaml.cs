@@ -11,6 +11,8 @@ using Xamarin.Forms.Internals;
 using XamarinFirebaseSample.Helpers;
 using System.Reflection;
 using Prism.Events;
+using XamarinFirebaseSample.Events;
+using XamarinFirebaseSample.Services;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XamarinFirebaseSample
@@ -57,8 +59,10 @@ namespace XamarinFirebaseSample
         public void Destroy()
         {
             Container.Resolve<IEventAggregator>()
-               .GetEvent<CloseEvent>()
-               .Publish();
+                     .GetEvent<DestoryEvent>()
+                     .Publish();
+
+            Container.Resolve<IAccountService>().Close();
         }
     }
 }

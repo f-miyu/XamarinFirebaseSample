@@ -19,7 +19,8 @@
                                        PortraitColumns="2"
                                        LandscapeColumns="3"
                                        ColumnHeight="1.4"
-                                       TouchFeedbackColor="Gray">
+                                       TouchFeedbackColor="Gray"
+                                       ItemTapCommand="{Binding GoToItemDetailCommand}">
         <collectionview:GridCollectionView.Behaviors>
             <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
         </collectionview:GridCollectionView.Behaviors>
