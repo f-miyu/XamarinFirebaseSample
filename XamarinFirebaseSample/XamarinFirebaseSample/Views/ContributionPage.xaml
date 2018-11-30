@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="{Binding Title}"
+             x:Class="XamarinFirebaseSample.Views.ContributionPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="投稿する" Command="{Binding ContributeCommand}" />
+    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <StackLayout Padding="16,8" >
+            <Grid>
+                <ffimageloading:CachedImage HeightRequest="100"
+                                            Source="photo.png"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize="true" 
+                                            IsVisible="{Binding ItemImageNotExists.Value}"/>
+                <ffimageloading:CachedImage HeightRequest="200"
+                                            Source="{Binding ItemImage.Value}"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize="true" />
+                <Button Text="+" Command="{Binding SelectImageCommand}" />
+            </Grid>
+            <Entry Text="{Binding ItemTitle.Value}" Placeholder="タイトル" HorizontalOptions="FillAndExpand" />
+            <Label Text="コメント" />
+            <Editor Text="{Binding ItemComment.Value}" AutoSize="TextChanges" HorizontalOptions="FillAndExpand"  />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

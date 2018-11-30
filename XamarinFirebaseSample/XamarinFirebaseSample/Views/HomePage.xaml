@@ -9,7 +9,7 @@
              x:Class="XamarinFirebaseSample.Views.HomePage"
              BackgroundColor="Gainsboro">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="追加" Command="{Binding AddItemCommand}" />
+        <ToolbarItem Text="投稿" Command="{Binding GoToContributionPageCommand}" />
     </ContentPage.ToolbarItems>
     <controls:CustomGridCollectionView ItemsSource="{Binding Items}"
                                        GridType="UniformGrid"
@@ -18,9 +18,9 @@
                                        BothSidesMargin="8"
                                        PortraitColumns="2"
                                        LandscapeColumns="3"
-                                       ColumnHeight="1.4"
+                                       ColumnHeight="1.6"
                                        TouchFeedbackColor="Gray"
-                                       ItemTapCommand="{Binding GoToItemDetailCommand}">
+                                       ItemTapCommand="{Binding GoToItemDetailPageCommand}">
         <collectionview:GridCollectionView.Behaviors>
             <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
         </collectionview:GridCollectionView.Behaviors>
@@ -34,19 +34,29 @@
                         </Grid.RowDefinitions>
                         <ffimageloading:CachedImage Grid.Row="0" 
                                                     Source="{Binding Image.Value}"
-                                                    Aspect="AspectFill"
-                                                    DownsampleUseDipUnits="true"
-                                                    DownsampleWidth="200"/>
-                        <Grid Grid.Row="1" 
-                              BackgroundColor="White" 
-                              Padding="4">
-                            <Label 
-                               VerticalOptions="CenterAndExpand"
-                               Text="{Binding Title.Value}" 
-                               FontSize="Small"
-                               MaxLines="1" 
-                               LineBreakMode="TailTruncation" />  
-                        </Grid>
+                                                    LoadingPlaceholder="photo.png"
+                                                    DownsampleUseDipUnits="true" 
+                                                    DownsampleWidth="200">
+                            <ffimageloading:CachedImage.Triggers>
+                                <Trigger TargetType="ffimageloading:CachedImage" Property="IsLoading" Value="true">
+                                    <Setter Property="Aspect" Value="AspectFit"/>
+                                </Trigger>
+                                <Trigger TargetType="ffimageloading:CachedImage" Property="IsLoading" Value="false">
+                                    <Setter Property="Aspect" Value="AspectFill"/>
+                                </Trigger>
+                            </ffimageloading:CachedImage.Triggers>
+                        </ffimageloading:CachedImage>
+                        <StackLayout Grid.Row="1" 
+                                     BackgroundColor="White" 
+                                     Padding="4">
+                            <Label Text="{Binding Title.Value}" 
+                                   FontSize="Small"
+                                   MaxLines="1" 
+                                   LineBreakMode="TailTruncation" />  
+                            <Label Text="{Binding LikeCount.Value, StringFormat='{0}いいね'}"
+                                   MaxLines="1" 
+                                   FontSize="Micro" />
+                        </StackLayout>
                     </Grid>
                 </collectionview:ContentCell>
             </DataTemplate>

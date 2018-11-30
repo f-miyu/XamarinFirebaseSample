@@ -13,6 +13,7 @@ namespace XamarinFirebaseSample.ViewModels
         public ReadOnlyReactivePropertySlim<string> Id { get; }
         public ReadOnlyReactivePropertySlim<string> Title { get; }
         public ReadOnlyReactivePropertySlim<string> Image { get; }
+        public ReadOnlyReactivePropertySlim<int> LikeCount { get; }
 
         public ItemViewModel(Item item)
         {
@@ -29,6 +30,10 @@ namespace XamarinFirebaseSample.ViewModels
             Image = _item.ObserveProperty(x => x.Image)
                          .ToReadOnlyReactivePropertySlim()
                          .AddTo(_disposables);
+
+            LikeCount = _item.ObserveProperty(x => x.LikeCount)
+                             .ToReadOnlyReactivePropertySlim()
+                             .AddTo(_disposables);
         }
 
         public void Dispose()

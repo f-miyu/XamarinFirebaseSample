@@ -19,6 +19,7 @@
     <PackageReference Include="Plugin.FirebaseAnalytics" Version="1.0.0" />
     <PackageReference Include="Nito.AsyncEx" Version="4.0.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.4.859" />
+    <PackageReference Include="Prism.Plugin.Popups" Version="2.2.0.293" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
@@ -26,6 +27,5 @@
     <Folder Include="Models\" />
     <Folder Include="Controls\" />
     <Folder Include="Events\" />
-    <Folder Include="Converters\" />
   </ItemGroup>
 </Project>

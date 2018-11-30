@@ -23,8 +23,8 @@ namespace XamarinFirebaseSample.ViewModels
         public ReadOnlyReactiveCollection<ItemViewModel> Items { get; set; }
 
         public AsyncReactiveCommand<ItemViewModel> LoadMoreCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
-        public AsyncReactiveCommand AddItemCommand { get; } = new AsyncReactiveCommand();
-        public AsyncReactiveCommand<ItemViewModel> GoToItemDetailCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
+        public AsyncReactiveCommand GoToContributionPageCommand { get; } = new AsyncReactiveCommand();
+        public AsyncReactiveCommand<ItemViewModel> GoToItemDetailPageCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
 
         public HomePageViewModel(INavigationService navigationService, IItemListService itemListService, IEventAggregator eventAggregator) : base(navigationService)
         {
@@ -43,17 +43,12 @@ namespace XamarinFirebaseSample.ViewModels
                 }
             });
 
-            AddItemCommand.Subscribe(async () =>
-            {
-                await _itemListService.AddItemAsync("test", "");
-            });
-
-            GoToItemDetailCommand.Subscribe(async viewModel =>
-            {
-                await NavigateAsync<ItemDetailPageViewModel, string>(viewModel.Id.Value);
-            });
+            GoToContributionPageCommand.Subscribe(async () => await NavigateAsync<ContributionPageViewModel>());
+            GoToItemDetailPageCommand.Subscribe(async viewModel => await NavigateAsync<ItemDetailPageViewModel, string>(viewModel.Id.Value));
 
             _eventAggregator.GetEvent<DestoryEvent>().Subscribe(_itemListService.Close);
+
+            _itemListService.LoadAsync();
         }
 
         public override void OnNavigatingTo(INavigationParameters parameters)
@@ -62,7 +57,7 @@ namespace XamarinFirebaseSample.ViewModels
 
             if (parameters.GetNavigationMode() == NavigationMode.New)
             {
-                _itemListService.LoadAsync();
+                //_itemListService.LoadAsync();
             }
         }
 

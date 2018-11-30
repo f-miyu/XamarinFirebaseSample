@@ -21,6 +21,7 @@ namespace XamarinFirebaseSample.ViewModels
 
         public ReadOnlyReactivePropertySlim<string> ItemImage { get; }
         public ReadOnlyReactivePropertySlim<string> ItemTitle { get; }
+        public ReadOnlyReactivePropertySlim<string> ItemComment { get; }
         public ReadOnlyReactivePropertySlim<int> LikeCount { get; }
         public ReadOnlyReactivePropertySlim<string> OwnerName { get; }
         public ReadOnlyReactivePropertySlim<string> OwnerImage { get; }
@@ -44,6 +45,12 @@ namespace XamarinFirebaseSample.ViewModels
                                     .Switch()
                                     .ToReadOnlyReactivePropertySlim()
                                     .AddTo(_disposables);
+
+            ItemComment = _itemService.Item
+                                      .Select(item => item != null ? item.ObserveProperty(i => i.Comment) : Observable.Return<string>(null))
+                                      .Switch()
+                                      .ToReadOnlyReactivePropertySlim()
+                                      .AddTo(_disposables);
 
             LikeCount = _itemService.Item
                                     .Select(item => item != null ? item.ObserveProperty(i => i.LikeCount) : Observable.Return(0))

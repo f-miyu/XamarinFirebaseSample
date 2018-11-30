@@ -3,12 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
-             xmlns:converters="clr-namespace:XamarinFirebaseSample.Converters" 
              Title="{Binding Title}"
              x:Class="XamarinFirebaseSample.Views.ItemDetailPage">
     <ScrollView>
         <StackLayout>
-            <StackLayout Orientation="Horizontal" Margin="32,8,32,0">
+            <StackLayout Orientation="Horizontal" Padding="16,8,16,0">
                 <ffimageloading:CachedImage HeightRequest="40"
                                             WidthRequest="40"
                                             Source="{Binding OwnerImage.Value}"
@@ -21,49 +20,38 @@
                 <Label Text="{Binding OwnerName.Value}" FontSize="Small" VerticalOptions="Center" />
             </StackLayout>
             <ffimageloading:CachedImage HeightRequest="350"
-                                    Source="{Binding ItemImage.Value}"
-                                    Aspect="AspectFit"
-                                    DownsampleToViewSize = "true" />
-            <Label Text="{Binding LikeCount.Value, StringFormat='{0}人がいいね'}" 
+                                        Source="{Binding ItemImage.Value}"
+                                        Aspect="AspectFit"
+                                        DownsampleToViewSize = "true" />
+            <Label Text="{Binding LikeCount.Value, StringFormat='{0}いいね'}" 
                    FontSize="Small" 
-                   Margin="32,0"/>
+                   Margin="16,0"/>
             <Button Command="{Binding LikeOrUnlikeCommand}" 
                     HorizontalOptions="Center"
                     WidthRequest="240"
                     BorderColor="LightPink"
                     BorderWidth="2">
-                <Button.Text>
-                    <Binding Path="IsLiked.Value">
-                        <Binding.Converter>
-                            <converters:BoolToObjectConverter x:TypeArguments="x:String"
-                                                              FalseObject="いいね"
-                                                              TrueObject="いいねしています">
-                            </converters:BoolToObjectConverter>
-                        </Binding.Converter>
-                    </Binding>
-                </Button.Text>
-                <Button.BackgroundColor>
-                    <Binding Path="IsLiked.Value">
-                        <Binding.Converter>
-                            <converters:BoolToObjectConverter x:TypeArguments="Color"
-                                                              FalseObject="LightPink"
-                                                              TrueObject="White">
-                            </converters:BoolToObjectConverter>
-                        </Binding.Converter>
-                    </Binding>
-                </Button.BackgroundColor>
-                <Button.TextColor>
-                    <Binding Path="IsLiked.Value">
-                        <Binding.Converter>
-                            <converters:BoolToObjectConverter x:TypeArguments="Color"
-                                                              FalseObject="White"
-                                                              TrueObject="LightPink">
-                            </converters:BoolToObjectConverter>
-                        </Binding.Converter>
-                    </Binding>
-                </Button.TextColor>
+                <Button.Triggers>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding IsLiked.Value}"
+                                 Value="true">
+                        <Setter Property="BackgroundColor" Value="White" />
+                        <Setter Property="Text" Value="いいねしています" />
+                        <Setter Property="TextColor" Value="LightPink" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Button"
+                                 Binding="{Binding IsLiked.Value}"
+                                 Value="false">
+                        <Setter Property="BackgroundColor" Value="LightPink" />
+                        <Setter Property="Text" Value="いいね" />
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Button.Triggers>
             </Button>
-            <Label Text="{Binding ItemTitle.Value}" FontSize="32" Margin="32,0"/>
+            <Label Text="{Binding ItemTitle.Value}" FontSize="32" 
+                   Margin="16,0"/>
+            <Label Text="{Binding ItemComment.Value}" FontSize="Medium" 
+                   Margin="16,0"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>

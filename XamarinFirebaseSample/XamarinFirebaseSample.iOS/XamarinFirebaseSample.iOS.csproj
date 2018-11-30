@@ -183,6 +183,7 @@
     <BundleResource Include="Resources\Default@2x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="GoogleService-Info.plist" />
+    <BundleResource Include="Resources\photo.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -228,6 +229,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Transformations">
       <Version>2.4.4.859</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Plugin.Popups">
+      <Version>2.2.0.293</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

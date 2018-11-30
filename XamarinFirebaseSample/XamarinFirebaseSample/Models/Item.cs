@@ -21,6 +21,8 @@ namespace XamarinFirebaseSample.Models
 
         public int LikeCount { get; set; }
 
+        public string Comment { get; set; }
+
         public long Timestamp { get; set; }
 
         public void CopyTo(Item item)
@@ -30,6 +32,7 @@ namespace XamarinFirebaseSample.Models
             item.Image = Image;
             item.OwnerId = OwnerId;
             item.LikeCount = LikeCount;
+            item.Comment = Comment;
             item.Timestamp = Timestamp;
         }
     }

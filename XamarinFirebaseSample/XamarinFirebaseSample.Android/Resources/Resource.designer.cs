@@ -766,7 +766,13 @@ namespace XamarinFirebaseSample.Droid
 			global::CollectionView.Droid.Resource.Drawable.abc_textfield_search_material = global::XamarinFirebaseSample.Droid.Resource.Drawable.abc_textfield_search_material;
 			global::CollectionView.Droid.Resource.Drawable.abc_vector_test = global::XamarinFirebaseSample.Droid.Resource.Drawable.abc_vector_test;
 			global::CollectionView.Droid.Resource.Drawable.avd_hide_password = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_hide_password;
+			global::CollectionView.Droid.Resource.Drawable.avd_hide_password_1 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_hide_password_1;
+			global::CollectionView.Droid.Resource.Drawable.avd_hide_password_2 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_hide_password_2;
+			global::CollectionView.Droid.Resource.Drawable.avd_hide_password_3 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_hide_password_3;
 			global::CollectionView.Droid.Resource.Drawable.avd_show_password = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_show_password;
+			global::CollectionView.Droid.Resource.Drawable.avd_show_password_1 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_show_password_1;
+			global::CollectionView.Droid.Resource.Drawable.avd_show_password_2 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_show_password_2;
+			global::CollectionView.Droid.Resource.Drawable.avd_show_password_3 = global::XamarinFirebaseSample.Droid.Resource.Drawable.avd_show_password_3;
 			global::CollectionView.Droid.Resource.Drawable.design_bottom_navigation_item_background = global::XamarinFirebaseSample.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::CollectionView.Droid.Resource.Drawable.design_fab_background = global::XamarinFirebaseSample.Droid.Resource.Drawable.design_fab_background;
 			global::CollectionView.Droid.Resource.Drawable.design_ic_visibility = global::XamarinFirebaseSample.Droid.Resource.Drawable.design_ic_visibility;
@@ -4775,8 +4781,26 @@ namespace XamarinFirebaseSample.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f020147
+			public const int avd_hide_password_1 = 2130837831;
+			
+			// aapt resource value: 0x7f020148
+			public const int avd_hide_password_2 = 2130837832;
+			
+			// aapt resource value: 0x7f020149
+			public const int avd_hide_password_3 = 2130837833;
+			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
+			
+			// aapt resource value: 0x7f02014a
+			public const int avd_show_password_1 = 2130837834;
+			
+			// aapt resource value: 0x7f02014b
+			public const int avd_show_password_2 = 2130837835;
+			
+			// aapt resource value: 0x7f02014c
+			public const int avd_show_password_3 = 2130837836;
 			
 			// aapt resource value: 0x7f020055
 			public const int common_full_open_on_phone = 2130837589;
@@ -5480,11 +5504,11 @@ namespace XamarinFirebaseSample.Droid
 			// aapt resource value: 0x7f02013e
 			public const int notification_icon_background = 2130837822;
 			
-			// aapt resource value: 0x7f020144
-			public const int notification_template_icon_bg = 2130837828;
-			
 			// aapt resource value: 0x7f020145
-			public const int notification_template_icon_low_bg = 2130837829;
+			public const int notification_template_icon_bg = 2130837829;
+			
+			// aapt resource value: 0x7f020146
+			public const int notification_template_icon_low_bg = 2130837830;
 			
 			// aapt resource value: 0x7f02013f
 			public const int notification_tile_bg = 2130837823;
@@ -5493,13 +5517,16 @@ namespace XamarinFirebaseSample.Droid
 			public const int notify_panel_notification_icon_bg = 2130837824;
 			
 			// aapt resource value: 0x7f020141
-			public const int splash = 2130837825;
+			public const int photo = 2130837825;
 			
 			// aapt resource value: 0x7f020142
-			public const int tooltip_frame_dark = 2130837826;
+			public const int splash = 2130837826;
 			
 			// aapt resource value: 0x7f020143
-			public const int tooltip_frame_light = 2130837827;
+			public const int tooltip_frame_dark = 2130837827;
+			
+			// aapt resource value: 0x7f020144
+			public const int tooltip_frame_light = 2130837828;
 			
 			static Drawable()
 			{
