@@ -13,6 +13,7 @@ using System.Reflection;
 using Prism.Events;
 using XamarinFirebaseSample.Events;
 using XamarinFirebaseSample.Services;
+using Prism.Plugin.Popups;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XamarinFirebaseSample
@@ -37,6 +38,8 @@ namespace XamarinFirebaseSample
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterPopupNavigationService();
+
             containerRegistry.RegisterForNavigation(this);
 
             GetType().Assembly.GetTypes()

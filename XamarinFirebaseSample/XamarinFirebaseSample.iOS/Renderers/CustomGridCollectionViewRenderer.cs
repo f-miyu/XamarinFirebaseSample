@@ -14,7 +14,8 @@ namespace XamarinFirebaseSample.iOS.Renderers
     {
         protected override void UpdateItems(NotifyCollectionChangedEventArgs e, int section, bool resetWhenGrouped, bool forceReset = false)
         {
-            if (!Control.IndexPathsForVisibleItems.Any())
+            if (!Control.IndexPathsForVisibleItems.Any() ||
+               (e.Action == NotifyCollectionChangedAction.Remove && Control.IndexPathsForVisibleItems.Count() == 1))
             {
                 forceReset = true;
             }

@@ -9,18 +9,24 @@
     </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout Padding="16,8" >
-            <Grid>
-                <ffimageloading:CachedImage HeightRequest="100"
-                                            Source="photo.png"
+            <AbsoluteLayout HeightRequest="200">  
+                <ffimageloading:CachedImage Source="photo.png"
                                             Aspect="AspectFit"
                                             DownsampleToViewSize="true" 
-                                            IsVisible="{Binding ItemImageNotExists.Value}"/>
-                <ffimageloading:CachedImage HeightRequest="200"
-                                            Source="{Binding ItemImage.Value}"
+                                            IsVisible="{Binding ItemImageNotExists.Value}"
+                                            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                            AbsoluteLayout.LayoutBounds="0.5,0.5,100,100"/>
+                <ffimageloading:CachedImage Source="{Binding ItemImage.Value}"
                                             Aspect="AspectFit"
-                                            DownsampleToViewSize="true" />
-                <Button Text="+" Command="{Binding SelectImageCommand}" />
-            </Grid>
+                                            DownsampleToViewSize="true" 
+                                            AbsoluteLayout.LayoutFlags="All"
+                                            AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+                <Button Text="+" FontSize="48" Command="{Binding SelectImageCommand}" 
+                        AbsoluteLayout.LayoutFlags="PositionProportional"
+                        AbsoluteLayout.LayoutBounds="0.5,0.5,AutoSize,AutoSize"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}"/>
+            </AbsoluteLayout>
             <Entry Text="{Binding ItemTitle.Value}" Placeholder="タイトル" HorizontalOptions="FillAndExpand" />
             <Label Text="コメント" />
             <Editor Text="{Binding ItemComment.Value}" AutoSize="TextChanges" HorizontalOptions="FillAndExpand"  />

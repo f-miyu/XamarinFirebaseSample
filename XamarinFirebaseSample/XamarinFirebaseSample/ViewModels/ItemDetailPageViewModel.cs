@@ -11,12 +11,18 @@ using XamarinFirebaseSample.Services;
 using System.Reactive.Linq;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Disposables;
+using Xamarin.Forms;
+using System.Threading;
+using System.Reactive.Threading.Tasks;
+using Plugin.Media;
+using Plugin.FirebaseAnalytics;
 
 namespace XamarinFirebaseSample.ViewModels
 {
     public class ItemDetailPageViewModel : ViewModelBase<string>
     {
         private readonly IItemService _itemService;
+        private readonly IPageDialogService _pageDialogService;
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         public ReadOnlyReactivePropertySlim<string> ItemImage { get; }
@@ -28,11 +34,15 @@ namespace XamarinFirebaseSample.ViewModels
         public ReadOnlyReactivePropertySlim<bool> IsLiked { get; }
         public ReadOnlyReactivePropertySlim<bool> IsOwner { get; }
 
-        public ReactiveCommand LikeOrUnlikeCommand { get; } = new ReactiveCommand();
+        public ReactiveCommand LikeOrUnlikeCommand { get; }
+        public AsyncReactiveCommand DeleteCommand { get; }
 
-        public ItemDetailPageViewModel(INavigationService navigationService, IItemService itemService) : base(navigationService)
+        public ItemDetailPageViewModel(INavigationService navigationService, IItemService itemService, IPageDialogService pageDialogService) : base(navigationService)
         {
             _itemService = itemService;
+            _pageDialogService = pageDialogService;
+
+            Title = "アイテム";
 
             ItemImage = _itemService.Item
                                     .Select(item => item != null ? item.ObserveProperty(i => i.Image) : Observable.Return<string>(null))
@@ -74,7 +84,60 @@ namespace XamarinFirebaseSample.ViewModels
 
             IsOwner = _itemService.IsOwner;
 
+            _itemService.DeleteCompletedNotifier
+                        .ObserveOn(SynchronizationContext.Current)
+                        .SelectMany(_ => _pageDialogService.DisplayAlertAsync(null, "削除が完了しました", "OK").ToObservable())
+                        .ObserveOn(SynchronizationContext.Current)
+                        .SelectMany(_ => GoBackAsync())
+                        .Subscribe()
+                        .AddTo(_disposables);
+
+            _itemService.DeleteErrorNotifier
+                        .ObserveOn(SynchronizationContext.Current)
+                        .SelectMany(_ => _pageDialogService.DisplayAlertAsync("エラー", "削除に失敗しました", "OK").ToObservable())
+                        .Subscribe()
+                        .AddTo(_disposables);
+
+            _itemService.DeletingNotifier
+                        .Skip(1)
+                        .Where(b => b)
+                        .ObserveOn(SynchronizationContext.Current)
+                        .SelectMany(_ => NavigateAsync<LoadingPageViewModel>())
+                        .Subscribe()
+                        .AddTo(_disposables);
+
+            _itemService.DeletingNotifier
+                        .Skip(1)
+                        .Where(b => !b)
+                        .ObserveOn(SynchronizationContext.Current)
+                        .SelectMany(_ => GoBackAsync())
+                        .Subscribe()
+                        .AddTo(_disposables);
+
+            LikeOrUnlikeCommand = _itemService.IsLoaded
+                                              .ObserveOn(SynchronizationContext.Current)
+                                              .ToReactiveCommand()
+                                              .AddTo(_disposables);
+
             LikeOrUnlikeCommand.Subscribe(() => _itemService.LikeOrUnlikeAsync());
+
+            DeleteCommand = new[]
+            {
+                _itemService.IsLoaded,
+                _itemService.IsOwner
+            }.CombineLatestValuesAreAllTrue()
+             .ObserveOn(SynchronizationContext.Current)
+             .ToAsyncReactiveCommand()
+             .AddTo(_disposables);
+
+            DeleteCommand.Subscribe(async () =>
+            {
+                var ok = await _pageDialogService.DisplayAlertAsync("確認", "削除してよろしいですか？", "OK", "キャンセル");
+                if (ok)
+                {
+                    await _itemService.DeleteAsync();
+                }
+            });
         }
 
         public override void Prepare(string parameter)

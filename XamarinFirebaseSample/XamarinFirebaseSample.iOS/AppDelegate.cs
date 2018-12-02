@@ -34,6 +34,7 @@ namespace XamarinFirebaseSample.iOS
             AiForms.Renderers.iOS.CollectionViewInit.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
+            Rg.Plugins.Popup.Popup.Init();
 
             global::Xamarin.Forms.Forms.Init();
 

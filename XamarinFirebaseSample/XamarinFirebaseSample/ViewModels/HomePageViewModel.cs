@@ -12,6 +12,7 @@ using Prism.Events;
 using XamarinFirebaseSample.Events;
 using System.Reactive.Linq;
 using Reactive.Bindings.Extensions;
+using System.Reactive.Disposables;
 
 namespace XamarinFirebaseSample.ViewModels
 {
@@ -19,8 +20,9 @@ namespace XamarinFirebaseSample.ViewModels
     {
         private readonly IItemListService _itemListService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
-        public ReadOnlyReactiveCollection<ItemViewModel> Items { get; set; }
+        public ReadOnlyReactiveCollection<ItemViewModel> Items { get; }
 
         public AsyncReactiveCommand<ItemViewModel> LoadMoreCommand { get; } = new AsyncReactiveCommand<ItemViewModel>();
         public AsyncReactiveCommand GoToContributionPageCommand { get; } = new AsyncReactiveCommand();
@@ -33,7 +35,7 @@ namespace XamarinFirebaseSample.ViewModels
 
             Title = "ホーム";
 
-            Items = _itemListService.Items.ToReadOnlyReactiveCollection(i => new ItemViewModel(i));
+            Items = _itemListService.Items.ToReadOnlyReactiveCollection(i => new ItemViewModel(i)).AddTo(_disposables);
 
             LoadMoreCommand.Subscribe(async item =>
             {
@@ -46,19 +48,10 @@ namespace XamarinFirebaseSample.ViewModels
             GoToContributionPageCommand.Subscribe(async () => await NavigateAsync<ContributionPageViewModel>());
             GoToItemDetailPageCommand.Subscribe(async viewModel => await NavigateAsync<ItemDetailPageViewModel, string>(viewModel.Id.Value));
 
-            _eventAggregator.GetEvent<DestoryEvent>().Subscribe(_itemListService.Close);
+            _eventAggregator.GetEvent<DestoryEvent>().Subscribe(_itemListService.Close)
+                            .AddTo(_disposables);
 
             _itemListService.LoadAsync();
-        }
-
-        public override void OnNavigatingTo(INavigationParameters parameters)
-        {
-            base.OnNavigatingTo(parameters);
-
-            if (parameters.GetNavigationMode() == NavigationMode.New)
-            {
-                //_itemListService.LoadAsync();
-            }
         }
 
         public override void Destroy()
@@ -66,6 +59,7 @@ namespace XamarinFirebaseSample.ViewModels
             base.Destroy();
 
             _itemListService.Close();
+            _disposables.Dispose();
         }
     }
 }

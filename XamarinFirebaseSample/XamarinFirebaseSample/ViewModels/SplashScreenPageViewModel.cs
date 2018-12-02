@@ -11,6 +11,9 @@ using XamarinFirebaseSample.Services;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
 using Reactive.Bindings.Extensions;
+using Prism.NavigationEx;
+using DryIoc;
+using System.Threading;
 
 namespace XamarinFirebaseSample.ViewModels
 {
@@ -25,19 +28,22 @@ namespace XamarinFirebaseSample.ViewModels
 
             _accountService.IsInitialized
                            .Where(b => b)
-                           .Take(1)
-                           .Subscribe(_ =>
+                           .ObserveOn(SynchronizationContext.Current)
+                           .SelectMany(_ =>
                            {
                                if (_accountService.IsLoggedIn.Value)
                                {
-                                   NavigateAsync<HomePageViewModel>(wrapInNavigationPage: true, noHistory: true);
+                                   var navigation = NavigationFactory.Create<MainPageViewModel>()
+                                                                     .Add(NavigationNameProvider.DefaultNavigationPageName)
+                                                                     .Add<HomePageViewModel>();
+                                   return NavigateAsync(navigation, noHistory: true);
                                }
-                               else
-                               {
-                                   NavigateAsync<LoginPageViewModel>(wrapInNavigationPage: true, noHistory: true);
-                               }
+                               return NavigateAsync<LoginPageViewModel>(wrapInNavigationPage: true, noHistory: true);
                            })
+                           .Subscribe()
                            .AddTo(_disposables);
+
+            _accountService.Initialize();
         }
 
         public override void Destroy()

@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="XamarinFirebaseSample.Views.MainPage" 
-             NavigationPage.HasNavigationBar="false">
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="8">
-        <Button Text="Eメールでログイン" BackgroundColor="Orange" TextColor="White" WidthRequest="240" />
-        <Button Text="Googleでログイン" BackgroundColor="#DB4437" TextColor="White" WidthRequest="240"/>
-        <Button Margin="0,30,0,0" Text="サインイン" BackgroundColor="MediumSeaGreen" TextColor="White" WidthRequest="240"/>
-    </StackLayout>
-</ContentPage>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms" 
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                  xmlns:converters="clr-namespace:XamarinFirebaseSample.Converters"
+                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                  xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+                  xmlns:prismbehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+                  x:Class="XamarinFirebaseSample.Views.MainPage" >
+    <MasterDetailPage.Master>
+        <ContentPage Title=" " Icon="{OnPlatform iOS='menu.png'}">
+            <ListView ItemsSource="{Binding Menus}" 
+                      SelectionMode="None"
+                      BackgroundColor="WhiteSmoke">
+                <ListView.Behaviors>
+                    <prismbehaviors:EventToCommandBehavior EventName="ItemTapped"
+                                                           Command="{Binding ShowDetailPageCommand}"
+                                                           EventArgsParameterPath="Item" />
+                </ListView.Behaviors>
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal" Padding="16,8,16,8">
+                        <ffimageloading:CachedImage HeightRequest="50"
+                                                    WidthRequest="50"
+                                                    Source="{Binding UserImage.Value}"
+                                                    Aspect="AspectFit"
+                                                    DownsampleToViewSize = "true">
+                            <ffimageloading:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation/>
+                            </ffimageloading:CachedImage.Transformations>
+                        </ffimageloading:CachedImage>
+                        <Label Text="{Binding UserName.Value}" 
+                               VerticalOptions="Center" />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout VerticalOptions="CenterAndExpand" Padding="16,0,0,0" >
+                                <Label Text="{Binding}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <StackLayout></StackLayout>
+                </ListView.Footer>
+            </ListView>
+        </ContentPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage >

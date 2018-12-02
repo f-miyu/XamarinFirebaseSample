@@ -6,6 +6,9 @@ using XamarinFirebaseSample.Models;
 using System.Threading.Tasks;
 using System.Reactive.Subjects;
 using Nito.AsyncEx;
+using Reactive.Bindings.Notifiers;
+using System.Reactive;
+using Plugin.FirebaseAnalytics;
 
 namespace XamarinFirebaseSample.Services
 {
@@ -26,8 +29,20 @@ namespace XamarinFirebaseSample.Services
 
         public ReadOnlyReactivePropertySlim<bool> IsOwner { get; }
 
+        private ReactivePropertySlim<bool> _isLoaded = new ReactivePropertySlim<bool>();
+        public ReadOnlyReactivePropertySlim<bool> IsLoaded { get; }
+
         private readonly Subject<string> _loadErrorNotifier = new Subject<string>();
         public IObservable<string> LoadErrorNotifier => _loadErrorNotifier;
+
+        private readonly BusyNotifier _deletingNotifier = new BusyNotifier();
+        public IObservable<bool> DeletingNotifier => _deletingNotifier;
+
+        private readonly Subject<string> _deleteErrorNotifier = new Subject<string>();
+        public IObservable<string> DeleteErrorNotifier => _deleteErrorNotifier;
+
+        private readonly Subject<Unit> _deleteCompletedNotifier = new Subject<Unit>();
+        public IObservable<Unit> DeleteCompletedNotifier => _deleteCompletedNotifier;
 
         public ItemService(IAccountService accountService)
         {
@@ -37,14 +52,17 @@ namespace XamarinFirebaseSample.Services
             Item = _item.ToReadOnlyReactivePropertySlim();
             Owner = _owner.ToReadOnlyReactivePropertySlim();
             IsLiked = _isLiked.ToReadOnlyReactivePropertySlim();
-            IsOwner = Observable.CombineLatest(Item, _accountService.UserId, (item, userId) => item != null && item.Id == userId)
+            IsOwner = Observable.CombineLatest(Item, _accountService.UserId, (item, userId) => item != null && item.OwnerId == userId)
                                 .ToReadOnlyReactivePropertySlim();
+            IsLoaded = _isLoaded.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task LoadAsync(string id)
         {
             try
             {
+                _isLoaded.Value = false;
+
                 var itemDocument = await _firestore.GetCollection(Models.Item.CollectionPath)
                                                    .GetDocument(id)
                                                    .GetDocumentAsync()
@@ -72,6 +90,10 @@ namespace XamarinFirebaseSample.Services
                     var likeDocument = await likeTask.ConfigureAwait(false);
 
                     _isLiked.Value = likeDocument.Exists;
+
+                    _isLoaded.Value = true;
+
+                    CrossFirebaseAnalytics.Current.LogEvent(EventName.ViewItem, new Parameter(ParameterName.ItemId, id));
                 }
             }
             catch (Exception e)
@@ -125,7 +147,6 @@ namespace XamarinFirebaseSample.Services
                     {
                         var like = new Like
                         {
-                            IsLiked = true,
                             Timestamp = DateTime.Now.Ticks
                         };
 
@@ -180,6 +201,27 @@ namespace XamarinFirebaseSample.Services
                 {
                     System.Diagnostics.Debug.WriteLine(e);
                 }
+            }
+        }
+
+        public async Task DeleteAsync()
+        {
+            try
+            {
+                using (_deletingNotifier.ProcessStart())
+                {
+                    await _firestore.GetCollection(Models.Item.CollectionPath)
+                                    .GetDocument(Item.Value.Id)
+                                    .DeleteDocumentAsync();
+
+                    await _accountService.IncrementContributionCountAsync(-1);
+                }
+                _deleteCompletedNotifier.OnNext(Unit.Default);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                _deleteErrorNotifier.OnNext(e.Message);
             }
         }
     }

@@ -14,6 +14,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using System.Reactive.Disposables;
 
 namespace XamarinFirebaseSample.ViewModels
 {
@@ -21,6 +22,7 @@ namespace XamarinFirebaseSample.ViewModels
     {
         private readonly IContributionService _contributionService;
         private readonly IPageDialogService _pageDialogService;
+        private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         public ReadOnlyReactivePropertySlim<ImageSource> ItemImage { get; }
         public ReactivePropertySlim<string> ItemTitle { get; }
@@ -49,29 +51,59 @@ namespace XamarinFirebaseSample.ViewModels
                                                 return stream;
                                             })
                                             .Select(s => s == null ? null : ImageSource.FromStream(() => s))
-                                            .ToReadOnlyReactivePropertySlim();
+                                            .ToReadOnlyReactivePropertySlim()
+                                            .AddTo(_disposables);
 
             ItemTitle = _contributionService.ItemTitle;
             ItemComment = _contributionService.ItemComment;
-            ItemImageNotExists = _contributionService.ItemImage.Select(s => s == null).ToReadOnlyReactivePropertySlim();
+            ItemImageNotExists = _contributionService.ItemImage.Select(s => s == null)
+                                                     .ToReadOnlyReactivePropertySlim()
+                                                     .AddTo(_disposables);
 
             _contributionService.ContributeCompletedNotifier
-                .ObserveOn(SynchronizationContext.Current)
-                .SelectMany(_ => _pageDialogService.DisplayAlertAsync(null, "投稿が完了しました", "OK").ToObservable())
-                .ObserveOn(SynchronizationContext.Current)
-                .SelectMany(_ => GoBackAsync())
-                .Subscribe();
+                                .ObserveOn(SynchronizationContext.Current)
+                                .SelectMany(_ => _pageDialogService.DisplayAlertAsync(null, "投稿が完了しました", "OK").ToObservable())
+                                .ObserveOn(SynchronizationContext.Current)
+                                .SelectMany(_ => GoBackAsync())
+                                .Subscribe()
+                                .AddTo(_disposables);
 
             _contributionService.ContributeErrorNotifier
-                .ObserveOn(SynchronizationContext.Current)
-                .SelectMany(_ => _pageDialogService.DisplayAlertAsync("エラー", "投稿に失敗しました", "OK").ToObservable())
-                .Subscribe();
+                                .ObserveOn(SynchronizationContext.Current)
+                                .SelectMany(_ => _pageDialogService.DisplayAlertAsync("エラー", "投稿に失敗しました", "OK").ToObservable())
+                                .Subscribe()
+                                .AddTo(_disposables);
+
+            _contributionService.ContributingNotifier
+                                .Skip(1)
+                                .Where(b => b)
+                                .ObserveOn(SynchronizationContext.Current)
+                                .SelectMany(_ => NavigateAsync<LoadingPageViewModel>())
+                                .Subscribe()
+                                .AddTo(_disposables);
+
+            _contributionService.ContributingNotifier
+                                .Skip(1)
+                                .Where(b => !b)
+                                .ObserveOn(SynchronizationContext.Current)
+                                .SelectMany(_ => GoBackAsync())
+                                .Subscribe()
+                                .AddTo(_disposables);
 
             SelectImageCommand = new AsyncReactiveCommand();
-            ContributeCommand = _contributionService.CanContribute.ToAsyncReactiveCommand();
+            ContributeCommand = _contributionService.CanContribute
+                                                    .ToAsyncReactiveCommand()
+                                                    .AddTo(_disposables);
 
             SelectImageCommand.Subscribe(async () => await _contributionService.SelectImage());
             ContributeCommand.Subscribe(async () => await _contributionService.Contribute());
+        }
+
+        public override void Destroy()
+        {
+            base.Destroy();
+
+            _disposables.Dispose();
         }
     }
 }

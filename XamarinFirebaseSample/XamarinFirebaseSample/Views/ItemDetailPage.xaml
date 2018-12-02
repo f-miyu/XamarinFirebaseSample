@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:XamarinFirebaseSample.Converters"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              Title="{Binding Title}"
              x:Class="XamarinFirebaseSample.Views.ItemDetailPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="削除" Command="{Binding DeleteCommand}" />
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout>
             <StackLayout Orientation="Horizontal" Padding="16,8,16,0">
@@ -48,7 +52,7 @@
                     </DataTrigger>
                 </Button.Triggers>
             </Button>
-            <Label Text="{Binding ItemTitle.Value}" FontSize="32" 
+            <Label Text="{Binding ItemTitle.Value}" FontSize="Large"
                    Margin="16,0"/>
             <Label Text="{Binding ItemComment.Value}" FontSize="Medium" 
                    Margin="16,0"/>

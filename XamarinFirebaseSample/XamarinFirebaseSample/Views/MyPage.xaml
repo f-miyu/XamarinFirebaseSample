@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XamarinFirebaseSample.Controls"
+             xmlns:converters="clr-namespace:XamarinFirebaseSample.Converters"
+             xmlns:collectionview="clr-namespace:AiForms.Renderers;assembly=CollectionView"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:pb="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             Title="{Binding Title}"
+             x:Class="XamarinFirebaseSample.Views.MyPage">
+    <StackLayout>
+        <StackLayout Padding="16,8,16,8">
+            <StackLayout Orientation="Horizontal" >
+                <ffimageloading:CachedImage HeightRequest="60"
+                                            WidthRequest="60"
+                                            Source="{Binding UserImage.Value}"
+                                            Aspect="AspectFit"
+                                            DownsampleToViewSize = "true">
+                    <ffimageloading:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimageloading:CachedImage.Transformations>
+                </ffimageloading:CachedImage>
+                <Label Text="{Binding UserName.Value}" 
+                       VerticalOptions="Center" 
+                       FontSize="Large"/>
+            </StackLayout>
+            <Label Text="{Binding ContributionCount.Value, StringFormat='{0}投稿'}" /> 
+        </StackLayout>
+        <controls:CustomGridCollectionView ItemsSource="{Binding Items}"
+                                           GridType="UniformGrid"
+                                           ColumnSpacing="8"
+                                           RowSpacing="8"
+                                           BothSidesMargin="8"
+                                           PortraitColumns="2"
+                                           LandscapeColumns="3"
+                                           ColumnHeight="1.6"
+                                           TouchFeedbackColor="Gainsboro"
+                                           ItemTapCommand="{Binding GoToItemDetailPageCommand}"
+                                           BackgroundColor="Gainsboro">
+            <collectionview:GridCollectionView.Behaviors>
+                <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
+            </collectionview:GridCollectionView.Behaviors>
+            <collectionview:GridCollectionView.Header>
+                
+            </collectionview:GridCollectionView.Header>
+            <collectionview:GridCollectionView.ItemTemplate>
+                <DataTemplate>
+                    <collectionview:ContentCell>
+                        <Grid BackgroundColor="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ffimageloading:CachedImage Grid.Row="0" 
+                                                        Source="{Binding Image.Value}"
+                                                        LoadingPlaceholder="loading.png"
+                                                        Aspect="AspectFill"
+                                                        DownsampleUseDipUnits="true" 
+                                                        DownsampleWidth="200">
+                            </ffimageloading:CachedImage>
+                            <StackLayout Grid.Row="1" 
+                                         BackgroundColor="White" 
+                                         Padding="4">
+                                <Label Text="{Binding Title.Value}" 
+                                       FontSize="Small"
+                                       MaxLines="1" 
+                                       LineBreakMode="TailTruncation" />  
+                                <Label Text="{Binding LikeCount.Value, StringFormat='{0}いいね'}"
+                                       MaxLines="1" 
+                                       FontSize="Micro" />
+                            </StackLayout>
+                        </Grid>
+                    </collectionview:ContentCell>
+                </DataTemplate>
+            </collectionview:GridCollectionView.ItemTemplate>
+        </controls:CustomGridCollectionView>    
+    </StackLayout>
+</ContentPage>

@@ -1,17 +1,18 @@
 ﻿using System;
-using Plugin.CloudFirestore;
 using System.Collections.ObjectModel;
-using XamarinFirebaseSample.Models;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Linq;
+using Plugin.CloudFirestore;
 using Plugin.CloudFirestore.Extensions;
 using Reactive.Bindings.Extensions;
+using XamarinFirebaseSample.Models;
+using System.ComponentModel;
 
 namespace XamarinFirebaseSample.Services
 {
-    public class ItemListService : IItemListService
+    public class UserItemListService : IUserItemListService
     {
         private const int Count = 20;
 
@@ -20,15 +21,23 @@ namespace XamarinFirebaseSample.Services
         private CompositeDisposable _disposables;
         private long _lastTimestamp = long.MaxValue;
         private bool _isClosed;
+        private string _userId;
         private readonly object _lock = new object();
 
         public ReadOnlyObservableCollection<Item> Items { get; }
 
-        public ItemListService()
+        public UserItemListService()
         {
             _firestore = CrossCloudFirestore.Current.Instance;
 
             Items = new ReadOnlyObservableCollection<Item>(_items);
+        }
+
+        public void SetUserId(string userId)
+        {
+            _userId = userId;
+            _disposables?.Dispose();
+            _items.Clear();
         }
 
         public async Task LoadAsync()
@@ -36,6 +45,7 @@ namespace XamarinFirebaseSample.Services
             try
             {
                 var documents = await _firestore.GetCollection(Item.CollectionPath)
+                                                .WhereEqualsTo(nameof(Item.OwnerId), _userId)
                                                 .OrderBy(nameof(Item.Timestamp), true)
                                                 .LimitTo(Count)
                                                 .StartAfter(new long[] { _lastTimestamp })
@@ -62,6 +72,7 @@ namespace XamarinFirebaseSample.Services
                             _disposables = new CompositeDisposable();
 
                             var query = _firestore.GetCollection(Item.CollectionPath)
+                                                  .WhereEqualsTo(nameof(Item.OwnerId), _userId)
                                                   .OrderBy(nameof(Item.Timestamp), true)
                                                   .EndAt(new long[] { _lastTimestamp });
 

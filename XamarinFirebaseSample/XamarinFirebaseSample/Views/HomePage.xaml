@@ -19,7 +19,7 @@
                                        PortraitColumns="2"
                                        LandscapeColumns="3"
                                        ColumnHeight="1.6"
-                                       TouchFeedbackColor="Gray"
+                                       TouchFeedbackColor="Gainsboro"
                                        ItemTapCommand="{Binding GoToItemDetailPageCommand}">
         <collectionview:GridCollectionView.Behaviors>
             <pb:EventToCommandBehavior EventName="ItemAppearing" Command="{Binding LoadMoreCommand}" EventArgsParameterPath="Item" />
@@ -34,17 +34,10 @@
                         </Grid.RowDefinitions>
                         <ffimageloading:CachedImage Grid.Row="0" 
                                                     Source="{Binding Image.Value}"
-                                                    LoadingPlaceholder="photo.png"
+                                                    LoadingPlaceholder="loading.png"
+                                                    Aspect="AspectFill"
                                                     DownsampleUseDipUnits="true" 
                                                     DownsampleWidth="200">
-                            <ffimageloading:CachedImage.Triggers>
-                                <Trigger TargetType="ffimageloading:CachedImage" Property="IsLoading" Value="true">
-                                    <Setter Property="Aspect" Value="AspectFit"/>
-                                </Trigger>
-                                <Trigger TargetType="ffimageloading:CachedImage" Property="IsLoading" Value="false">
-                                    <Setter Property="Aspect" Value="AspectFill"/>
-                                </Trigger>
-                            </ffimageloading:CachedImage.Triggers>
                         </ffimageloading:CachedImage>
                         <StackLayout Grid.Row="1" 
                                      BackgroundColor="White" 

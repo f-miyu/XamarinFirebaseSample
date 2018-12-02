@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive;
 using System.Threading.Tasks;
 using Reactive.Bindings;
 using XamarinFirebaseSample.Models;
@@ -11,10 +12,15 @@ namespace XamarinFirebaseSample.Services
         ReadOnlyReactivePropertySlim<User> Owner { get; }
         ReadOnlyReactivePropertySlim<bool> IsLiked { get; }
         ReadOnlyReactivePropertySlim<bool> IsOwner { get; }
+        ReadOnlyReactivePropertySlim<bool> IsLoaded { get; }
         IObservable<string> LoadErrorNotifier { get; }
+        IObservable<bool> DeletingNotifier { get; }
+        IObservable<string> DeleteErrorNotifier { get; }
+        IObservable<Unit> DeleteCompletedNotifier { get; }
         Task LoadAsync(string id);
         Task LikeOrUnlikeAsync();
         Task LikeAsync();
         Task UnlikeAsync();
+        Task DeleteAsync();
     }
 }

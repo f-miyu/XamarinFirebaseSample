@@ -174,16 +174,15 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\ItunesArtwork@2x.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\Default-568h@2x.png" />
-    <BundleResource Include="Resources\Default-Portrait.png" />
-    <BundleResource Include="Resources\Default-Portrait@2x.png" />
-    <BundleResource Include="Resources\Default.png" />
-    <BundleResource Include="Resources\Default@2x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\photo.png" />
+    <BundleResource Include="Resources\loading.png" />
+    <BundleResource Include="Resources\menu.png" />
+    <BundleResource Include="Resources\user.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -212,9 +211,6 @@
     <PackageReference Include="AiForms.CollectionView">
       <Version>0.3.8-pre</Version>
     </PackageReference>
-    <PackageReference Include="Plugin.CloudFirestore">
-      <Version>1.2.2</Version>
-    </PackageReference>
     <PackageReference Include="Plugin.FirebaseStorage">
       <Version>1.1.0</Version>
     </PackageReference>
@@ -232,6 +228,9 @@
     </PackageReference>
     <PackageReference Include="Prism.Plugin.Popups">
       <Version>2.2.0.293</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.CloudFirestore">
+      <Version>1.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

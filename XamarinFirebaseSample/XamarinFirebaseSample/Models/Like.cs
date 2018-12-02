@@ -10,8 +10,6 @@ namespace XamarinFirebaseSample.Models
         [Id]
         public string ItemId { get; set; }
 
-        public bool IsLiked { get; set; }
-
         public long Timestamp { get; set; }
     }
 }

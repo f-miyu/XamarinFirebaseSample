@@ -4,8 +4,8 @@
              x:Class="XamarinFirebaseSample.Views.LoginPage"
              NavigationPage.HasNavigationBar="false">
     <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="8">
-        <Button Text="Eメールでログイン" BackgroundColor="Orange" TextColor="White" WidthRequest="240" />
-        <Button Text="Googleでログイン" Command="{Binding LoginWithGoogleCommand}" BackgroundColor="#DB4437" TextColor="White" WidthRequest="240"/>
-        <Button Margin="0,30,0,0" Text="サインイン" BackgroundColor="MediumSeaGreen" TextColor="White" WidthRequest="240"/>
+        <Button Text="Eメールでログイン" Command="{Binding LoginWithEmailCommand}" />
+        <Button Text="Googleでログイン" Command="{Binding LoginWithGoogleCommand}" />
+        <Button Text="サインアップ" Margin="0,30,0,0" Command="{Binding SignupCommand}" />
     </StackLayout>
 </ContentPage>

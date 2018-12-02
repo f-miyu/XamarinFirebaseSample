@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System.Linq;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
@@ -7,8 +8,11 @@ using Plugin.CurrentActivity;
 using Prism;
 using Prism.Events;
 using Prism.Ioc;
+using Rg.Plugins.Popup;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Auth;
-using XamarinFirebaseSample.Events;
+using XamarinFirebaseSample.Views;
+using Android.Service.Autofill;
 
 namespace XamarinFirebaseSample.Droid
 {
@@ -43,6 +47,7 @@ namespace XamarinFirebaseSample.Droid
 
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
             Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
+            Rg.Plugins.Popup.Popup.Init(this, bundle);
 
             CustomTabsConfiguration.CustomTabsClosingMessage = null;
 
@@ -55,6 +60,15 @@ namespace XamarinFirebaseSample.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override void OnBackPressed()
+        {
+            var page = PopupNavigation.Instance.PopupStack.LastOrDefault();
+            if (!(page is LoadingPage))
+            {
+                Popup.SendBackPressed(base.OnBackPressed);
+            }
         }
 
         protected override void OnDestroy()

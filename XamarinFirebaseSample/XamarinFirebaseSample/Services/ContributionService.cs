@@ -93,6 +93,8 @@ namespace XamarinFirebaseSample.Services
                         .GetDocument(id)
                         .SetDataAsync(item)
                         .ConfigureAwait(false);
+
+                    await _accountService.IncrementContributionCountAsync(1);
                 }
                 _contributeCompletedNotifier.OnNext(Unit.Default);
             }

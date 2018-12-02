@@ -16,6 +16,8 @@ namespace XamarinFirebaseSample.Models
 
         public string Image { get; set; }
 
+        public int ContributionCount { get; set; }
+
         public void CopyTo(User user)
         {
             user.Id = Id;

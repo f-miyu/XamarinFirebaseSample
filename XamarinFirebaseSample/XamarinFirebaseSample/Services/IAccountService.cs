@@ -8,11 +8,16 @@ namespace XamarinFirebaseSample.Services
     {
         ReadOnlyReactivePropertySlim<bool> IsInitialized { get; }
         ReadOnlyReactivePropertySlim<bool> IsLoggedIn { get; }
-        IObservable<string> LoginErrorNotifier { get; }
         ReadOnlyReactivePropertySlim<string> UserId { get; }
         ReadOnlyReactivePropertySlim<string> UserName { get; }
         ReadOnlyReactivePropertySlim<string> UserImage { get; }
-        Task LoginWithGoogle();
+        ReadOnlyReactivePropertySlim<int> ContributionCount { get; }
+        Task Initialize();
+        Task LoginWithGoogleAsync(string idToken, string accessToken);
+        Task LoginWithEmailAndPasswordAsync(string email, string password);
+        Task SignupAsync(string email, string password, string name, string image = null);
+        void Logout();
+        Task IncrementContributionCountAsync(int delta);
         void Close();
     }
 }

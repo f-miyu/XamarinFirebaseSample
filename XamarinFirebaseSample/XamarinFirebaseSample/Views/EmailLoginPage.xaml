@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}"
+             x:Class="XamarinFirebaseSample.Views.EmailLoginPage">
+    <StackLayout Padding="16,8">
+        <Entry Text="{Binding Email.Value}" 
+               Placeholder="メールアドレス" 
+               Keyboard="Email"
+               HorizontalOptions="FillAndExpand" />
+        <Entry Text="{Binding Password.Value}" 
+               Placeholder="パスワード"
+               IsPassword="true"    
+               HorizontalOptions="FillAndExpand" />
+        <Button Text="ログイン" 
+                Command="{Binding LoginCommand}"
+                HorizontalOptions="Center"/>
+    </StackLayout>
+</ContentPage>
