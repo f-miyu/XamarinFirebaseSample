@@ -34,15 +34,6 @@
 	<string>XamarinFirebaseSample</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>投稿する画像を選択するためにフォトライブラリにアクセスします</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array/>
-			<key>CFBundleURLName</key>
-			<string>Google OAuth</string>
-		</dict>
-	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 </dict>
