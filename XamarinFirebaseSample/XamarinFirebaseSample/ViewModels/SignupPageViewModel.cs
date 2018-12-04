@@ -55,7 +55,7 @@ namespace XamarinFirebaseSample.ViewModels
 
             _signupService.SignupErrorNotifier
                                .ObserveOn(SynchronizationContext.Current)
-                               .Subscribe(_ => _pageDialogService.DisplayAlertAsync("エラー", "サインインに失敗しました", "OK"))
+                               .Subscribe(_ => _pageDialogService.DisplayAlertAsync("エラー", "サインアップに失敗しました", "OK"))
                                .AddTo(_disposables);
 
             _signupService.IsSigningUp
