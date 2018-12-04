@@ -74,7 +74,7 @@ namespace XamarinFirebaseSample.ViewModels
                                 .Subscribe()
                                 .AddTo(_disposables);
 
-            _contributionService.ContributingNotifier
+            _contributionService.IsContributing
                                 .Skip(1)
                                 .Where(b => b)
                                 .ObserveOn(SynchronizationContext.Current)
@@ -82,7 +82,7 @@ namespace XamarinFirebaseSample.ViewModels
                                 .Subscribe()
                                 .AddTo(_disposables);
 
-            _contributionService.ContributingNotifier
+            _contributionService.IsContributing
                                 .Skip(1)
                                 .Where(b => !b)
                                 .ObserveOn(SynchronizationContext.Current)

@@ -28,7 +28,7 @@ namespace XamarinFirebaseSample.Services
         public ReadOnlyReactivePropertySlim<bool> CanContribute { get; }
 
         private readonly BusyNotifier _contributingNotifier = new BusyNotifier();
-        public IObservable<bool> ContributingNotifier => _contributingNotifier;
+        public ReadOnlyReactivePropertySlim<bool> IsContributing { get; }
 
         private readonly Subject<string> _contributeErrorNotifier = new Subject<string>();
         public IObservable<string> ContributeErrorNotifier => _contributeErrorNotifier;
@@ -50,6 +50,8 @@ namespace XamarinFirebaseSample.Services
             }
             .CombineLatestValuesAreAllTrue()
             .ToReadOnlyReactivePropertySlim();
+
+            IsContributing = _contributingNotifier.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task SelectImage()

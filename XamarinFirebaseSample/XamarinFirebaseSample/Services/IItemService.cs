@@ -13,8 +13,8 @@ namespace XamarinFirebaseSample.Services
         ReadOnlyReactivePropertySlim<bool> IsLiked { get; }
         ReadOnlyReactivePropertySlim<bool> IsOwner { get; }
         ReadOnlyReactivePropertySlim<bool> IsLoaded { get; }
+        ReadOnlyReactivePropertySlim<bool> IsDeleting { get; }
         IObservable<string> LoadErrorNotifier { get; }
-        IObservable<bool> DeletingNotifier { get; }
         IObservable<string> DeleteErrorNotifier { get; }
         IObservable<Unit> DeleteCompletedNotifier { get; }
         Task LoadAsync(string id);

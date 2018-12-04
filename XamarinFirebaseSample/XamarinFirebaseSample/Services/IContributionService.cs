@@ -12,7 +12,7 @@ namespace XamarinFirebaseSample.Services
         ReactivePropertySlim<string> ItemTitle { get; }
         ReactivePropertySlim<string> ItemComment { get; }
         ReadOnlyReactivePropertySlim<bool> CanContribute { get; }
-        IObservable<bool> ContributingNotifier { get; }
+        ReadOnlyReactivePropertySlim<bool> IsContributing { get; }
         IObservable<string> ContributeErrorNotifier { get; }
         IObservable<Unit> ContributeCompletedNotifier { get; }
         Task SelectImage();

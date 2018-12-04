@@ -98,7 +98,7 @@ namespace XamarinFirebaseSample.ViewModels
                         .Subscribe()
                         .AddTo(_disposables);
 
-            _itemService.DeletingNotifier
+            _itemService.IsDeleting
                         .Skip(1)
                         .Where(b => b)
                         .ObserveOn(SynchronizationContext.Current)
@@ -106,7 +106,7 @@ namespace XamarinFirebaseSample.ViewModels
                         .Subscribe()
                         .AddTo(_disposables);
 
-            _itemService.DeletingNotifier
+            _itemService.IsDeleting
                         .Skip(1)
                         .Where(b => !b)
                         .ObserveOn(SynchronizationContext.Current)

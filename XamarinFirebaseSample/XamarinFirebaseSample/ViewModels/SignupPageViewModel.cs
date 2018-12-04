@@ -58,7 +58,7 @@ namespace XamarinFirebaseSample.ViewModels
                                .Subscribe(_ => _pageDialogService.DisplayAlertAsync("エラー", "サインインに失敗しました", "OK"))
                                .AddTo(_disposables);
 
-            _signupService.DoingSignupNotifier
+            _signupService.IsSigningUp
                           .Skip(1)
                           .Where(b => b)
                           .ObserveOn(SynchronizationContext.Current)
@@ -66,7 +66,7 @@ namespace XamarinFirebaseSample.ViewModels
                           .Subscribe()
                           .AddTo(_disposables);
 
-            _signupService.DoingSignupNotifier
+            _signupService.IsSigningUp
                           .Skip(1)
                           .Where(b => !b)
                           .ObserveOn(SynchronizationContext.Current)

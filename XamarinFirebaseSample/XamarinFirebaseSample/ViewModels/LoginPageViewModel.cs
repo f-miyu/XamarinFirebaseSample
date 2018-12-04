@@ -49,7 +49,7 @@ namespace XamarinFirebaseSample.ViewModels
                                .Subscribe(_ => _pageDialogService.DisplayAlertAsync("エラー", "ログインに失敗しました", "OK"))
                                .AddTo(_disposables);
 
-            _googleLoginService.DoingLoginNotifier
+            _googleLoginService.IsLoggingIn
                                .Skip(1)
                                .Where(b => b)
                                .ObserveOn(SynchronizationContext.Current)
@@ -57,7 +57,7 @@ namespace XamarinFirebaseSample.ViewModels
                                .Subscribe()
                                .AddTo(_disposables);
 
-            _googleLoginService.DoingLoginNotifier
+            _googleLoginService.IsLoggingIn
                                .Skip(1)
                                .Where(b => !b)
                                .ObserveOn(SynchronizationContext.Current)

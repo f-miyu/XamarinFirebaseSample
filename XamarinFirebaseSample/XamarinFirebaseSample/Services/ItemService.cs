@@ -36,7 +36,7 @@ namespace XamarinFirebaseSample.Services
         public IObservable<string> LoadErrorNotifier => _loadErrorNotifier;
 
         private readonly BusyNotifier _deletingNotifier = new BusyNotifier();
-        public IObservable<bool> DeletingNotifier => _deletingNotifier;
+        public ReadOnlyReactivePropertySlim<bool> IsDeleting { get; }
 
         private readonly Subject<string> _deleteErrorNotifier = new Subject<string>();
         public IObservable<string> DeleteErrorNotifier => _deleteErrorNotifier;
@@ -55,6 +55,7 @@ namespace XamarinFirebaseSample.Services
             IsOwner = Observable.CombineLatest(Item, _accountService.UserId, (item, userId) => item != null && item.OwnerId == userId)
                                 .ToReadOnlyReactivePropertySlim();
             IsLoaded = _isLoaded.ToReadOnlyReactivePropertySlim();
+            IsDeleting = _deletingNotifier.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task LoadAsync(string id)

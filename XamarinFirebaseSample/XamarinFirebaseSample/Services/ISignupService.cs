@@ -12,7 +12,7 @@ namespace XamarinFirebaseSample.Services
         ReactivePropertySlim<string> Password { get; }
         ReactivePropertySlim<string> Image { get; }
         ReadOnlyReactivePropertySlim<bool> CanSignup { get; }
-        IObservable<bool> DoingSignupNotifier { get; }
+        ReadOnlyReactivePropertySlim<bool> IsSigningUp { get; }
         IObservable<string> SignupErrorNotifier { get; }
         IObservable<Unit> SignupCompletedNotifier { get; }
 

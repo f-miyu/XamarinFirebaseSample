@@ -19,8 +19,8 @@ namespace XamarinFirebaseSample.Services
         public ReactivePropertySlim<string> Image { get; } = new ReactivePropertySlim<string>();
         public ReadOnlyReactivePropertySlim<bool> CanSignup { get; }
 
-        public BusyNotifier _doingSignupNotifier = new BusyNotifier();
-        public IObservable<bool> DoingSignupNotifier => _doingSignupNotifier;
+        public BusyNotifier _signingUpNotifier = new BusyNotifier();
+        public ReadOnlyReactivePropertySlim<bool> IsSigningUp { get; }
 
         public Subject<string> _signupErrorNotifier = new Subject<string>();
         public IObservable<string> SignupErrorNotifier => _signupErrorNotifier;
@@ -40,6 +40,8 @@ namespace XamarinFirebaseSample.Services
             }
             .CombineLatestValuesAreAllTrue()
             .ToReadOnlyReactivePropertySlim();
+
+            IsSigningUp = _signingUpNotifier.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task Signup()
@@ -49,7 +51,7 @@ namespace XamarinFirebaseSample.Services
 
             try
             {
-                using (_doingSignupNotifier.ProcessStart())
+                using (_signingUpNotifier.ProcessStart())
                 {
                     await _accountService.SignupAsync(Email.Value, Password.Value, Name.Value, Image.Value);
                 }

@@ -17,8 +17,8 @@ namespace XamarinFirebaseSample.Services
         public ReactivePropertySlim<string> Password { get; } = new ReactivePropertySlim<string>();
         public ReadOnlyReactivePropertySlim<bool> CanLogin { get; }
 
-        public BusyNotifier _doingLoginNotifier = new BusyNotifier();
-        public IObservable<bool> DoingLoginNotifier => _doingLoginNotifier;
+        public BusyNotifier _loggingInNotifier = new BusyNotifier();
+        public ReadOnlyReactivePropertySlim<bool> IsLoggingIn { get; }
 
         public Subject<string> _loginErrorNotifier = new Subject<string>();
         public IObservable<string> LoginErrorNotifier => _loginErrorNotifier;
@@ -37,6 +37,8 @@ namespace XamarinFirebaseSample.Services
             }
             .CombineLatestValuesAreAllTrue()
             .ToReadOnlyReactivePropertySlim();
+
+            IsLoggingIn = _loggingInNotifier.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task Login()
@@ -46,7 +48,7 @@ namespace XamarinFirebaseSample.Services
 
             try
             {
-                using (_doingLoginNotifier.ProcessStart())
+                using (_loggingInNotifier.ProcessStart())
                 {
                     await _accountService.LoginWithEmailAndPasswordAsync(Email.Value, Password.Value);
                 }

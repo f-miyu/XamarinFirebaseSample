@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Reactive.Bindings.Notifiers;
 using System.Reactive.Subjects;
 using System.Reactive;
+using Reactive.Bindings;
 
 namespace XamarinFirebaseSample.Services
 {
@@ -11,8 +12,8 @@ namespace XamarinFirebaseSample.Services
         private readonly IAccountService _accountService;
         private readonly IAuthService _authService;
 
-        public BusyNotifier _doingLoginNotifier = new BusyNotifier();
-        public IObservable<bool> DoingLoginNotifier => _doingLoginNotifier;
+        public BusyNotifier _loggingInNotifier = new BusyNotifier();
+        public ReadOnlyReactivePropertySlim<bool> IsLoggingIn { get; }
 
         public Subject<string> _loginErrorNotifier = new Subject<string>();
         public IObservable<string> LoginErrorNotifier => _loginErrorNotifier;
@@ -24,6 +25,8 @@ namespace XamarinFirebaseSample.Services
         {
             _accountService = accountService;
             _authService = authService;
+
+            IsLoggingIn = _loggingInNotifier.ToReadOnlyReactivePropertySlim();
         }
 
         public async Task Login()
@@ -34,7 +37,7 @@ namespace XamarinFirebaseSample.Services
 
                 if (idToken != null)
                 {
-                    using (_doingLoginNotifier.ProcessStart())
+                    using (_loggingInNotifier.ProcessStart())
                     {
                         await _accountService.LoginWithGoogleAsync(idToken, accessToken);
                     }
