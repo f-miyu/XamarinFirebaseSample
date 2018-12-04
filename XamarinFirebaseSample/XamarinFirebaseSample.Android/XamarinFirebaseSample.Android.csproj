@@ -116,6 +116,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomUrlSchemeInterceptorActivity.cs" />
     <Compile Include="SplashActivity.cs" />
+    <Compile Include="Renderers\CustomCollectionViewAdapter.cs" />
+    <Compile Include="Renderers\CustomGridCollectionViewRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -154,6 +156,7 @@
   <ItemGroup>
     <Folder Include="Resources\xml\" />
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />
