@@ -38,7 +38,7 @@ namespace XamarinFirebaseSample.Services
                 var documents = await _firestore.GetCollection(Item.CollectionPath)
                                                 .OrderBy(nameof(Item.Timestamp), true)
                                                 .LimitTo(Count)
-                                                .StartAfter(new long[] { _lastTimestamp })
+                                                .StartAfter(_lastTimestamp)
                                                 .GetDocumentsAsync()
                                                 .ConfigureAwait(false);
 
@@ -63,7 +63,7 @@ namespace XamarinFirebaseSample.Services
 
                             var query = _firestore.GetCollection(Item.CollectionPath)
                                                   .OrderBy(nameof(Item.Timestamp), true)
-                                                  .EndAt(new long[] { _lastTimestamp });
+                                                  .EndAt(_lastTimestamp);
 
                             query.ObserveAdded()
                                  .Where(d => _items.FirstOrDefault(i => i.Id == d.Document.Id) == null)

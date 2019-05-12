@@ -8,7 +8,6 @@ using Plugin.CloudFirestore;
 using Plugin.CloudFirestore.Extensions;
 using Reactive.Bindings.Extensions;
 using XamarinFirebaseSample.Models;
-using System.ComponentModel;
 
 namespace XamarinFirebaseSample.Services
 {
@@ -48,7 +47,7 @@ namespace XamarinFirebaseSample.Services
                                                 .WhereEqualsTo(nameof(Item.OwnerId), _userId)
                                                 .OrderBy(nameof(Item.Timestamp), true)
                                                 .LimitTo(Count)
-                                                .StartAfter(new long[] { _lastTimestamp })
+                                                .StartAfter(_lastTimestamp)
                                                 .GetDocumentsAsync()
                                                 .ConfigureAwait(false);
 
@@ -74,7 +73,7 @@ namespace XamarinFirebaseSample.Services
                             var query = _firestore.GetCollection(Item.CollectionPath)
                                                   .WhereEqualsTo(nameof(Item.OwnerId), _userId)
                                                   .OrderBy(nameof(Item.Timestamp), true)
-                                                  .EndAt(new long[] { _lastTimestamp });
+                                                  .EndAt(_lastTimestamp);
 
                             query.ObserveAdded()
                                  .Where(d => _items.FirstOrDefault(i => i.Id == d.Document.Id) == null)

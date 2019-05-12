@@ -4,23 +4,23 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="3.4.0.1008975" />
+        <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
         <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
         <PackageReference Include="Prism.NavigationEx" Version="1.2.0" />
-        <PackageReference Include="Plugin.FirebaseAuth" Version="1.1.2" />
-        <PackageReference Include="ReactiveProperty" Version="5.3.0" />
-        <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
-        <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+        <PackageReference Include="Plugin.FirebaseAuth" Version="2.0.0-pre2" />
+        <PackageReference Include="ReactiveProperty" Version="5.4.0" />
+        <PackageReference Include="PropertyChanged.Fody" Version="3.0.0" />
+        <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.9.961" />
         <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
-        <PackageReference Include="AiForms.CollectionView" Version="0.3.8-pre" />
-        <PackageReference Include="Plugin.FirebaseStorage" Version="1.1.0" />
+        <PackageReference Include="AiForms.CollectionView" Version="0.3.10-pre" />
+        <PackageReference Include="Plugin.FirebaseStorage" Version="2.0.0-pre1" />
         <PackageReference Include="Xamarin.Auth" Version="1.6.0.4" />
-        <PackageReference Include="Plugin.FirebaseCrashlytics" Version="1.0.0-pre" />
-        <PackageReference Include="Plugin.FirebaseAnalytics" Version="1.0.0" />
-        <PackageReference Include="Nito.AsyncEx" Version="4.0.1" />
-        <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.4.859" />
+        <PackageReference Include="Plugin.FirebaseCrashlytics" Version="2.0.0-pre1" />
+        <PackageReference Include="Plugin.FirebaseAnalytics" Version="2.0.0-pre2" />
+        <PackageReference Include="Nito.AsyncEx" Version="5.0.0" />
+        <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.9.961" />
         <PackageReference Include="Prism.Plugin.Popups" Version="2.2.0.293" />
-        <PackageReference Include="Plugin.CloudFirestore" Version="1.2.3" />
+        <PackageReference Include="Plugin.CloudFirestore" Version="2.0.0-pre1" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Helpers\" />

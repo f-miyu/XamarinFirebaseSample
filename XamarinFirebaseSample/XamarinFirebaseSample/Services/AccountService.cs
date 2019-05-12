@@ -87,9 +87,9 @@ namespace XamarinFirebaseSample.Services
             {
                 var tcs = new TaskCompletionSource<string>();
 
-                registration = _firebaseAuth.AddAuthStateChangedListener(user =>
+                registration = _firebaseAuth.AddAuthStateChangedListener(auth =>
                 {
-                    tcs.TrySetResult(user?.Uid);
+                    tcs.TrySetResult(auth?.CurrentUser?.Uid);
                 });
 
                 var userId = await tcs.Task.ConfigureAwait(false);
